@@ -25,7 +25,7 @@ Marcas: **[SANDBOX]** = modo de pruebas, sin dinero ni envíos reales · **[REAL
 
 **Qué falló.**
 1. `npx impeccable install` falló al inicio. **Causa raíz:** el entorno en la nube bloqueaba el dominio `impeccable.style`. **Arreglo:** con permiso de Monse se agregó ese dominio a la lista de sitios permitidos y el instalador oficial terminó bien.
-2. Subir cambios a GitHub (`git push`) está bloqueado. **Causa raíz:** la app de Claude en GitHub no tiene permiso de escritura sobre `Monsxa/Provana`. **Pendiente:** Monse debe instalar o reconectar la app de GitHub.
+2. Al conectar el repositorio, la herramienta avisó que `git push` podría ser rechazado por falta de permisos. **Prueba:** se hizo `git push -u origin docs/planeacion` y la rama se subió bien, así que el aviso no aplicó. Se deja registrado por si falla más adelante.
 
 **Herramientas usadas en esta fase.**
 - `gh`/`git`: leer el repositorio.
