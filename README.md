@@ -4,7 +4,9 @@ Marketplace mexicano que conecta emprendedores con proveedores confiables. No es
 
 > **Función estrella: [Surtido inteligente](docs/surtido-inteligente.md)** — arma la mejor combinación de proveedores para tu lista.
 >
-> **Estado actual: planeación.** Este documento contiene la propuesta de stack, los diagramas y el esquema de datos. Todavía no hay código de la aplicación; la landing original sigue en `index.html`. Las decisiones pendientes están en [`BITACORA.md`](BITACORA.md).
+> **Estado actual:** bloque 1 listo: Surtido inteligente funcionando y probado, y la portada pasada a Next.js. Siguiente: cuentas, catálogo y carrito. Las decisiones están en [`BITACORA.md`](BITACORA.md). La landing original quedó en `legacy/landing-original.html`.
+
+![Surtido inteligente en escritorio](docs/capturas/surtido-esc.png)
 
 - **Alcance:** solo México (32 estados), solo proveedores mexicanos, solo MXN con IVA desglosado, todo en español de México.
 - **Usuarios:** comprador, proveedor y administrador.
@@ -17,10 +19,59 @@ Marketplace mexicano que conecta emprendedores con proveedores confiables. No es
 | [`BITACORA.md`](BITACORA.md) | Una entrada por decisión: qué propuse, qué decidiste, por qué, cómo se probó, qué falló |
 | [`docs/wireframes.md`](docs/wireframes.md) | Wireframes de las pantallas principales (celular primero) |
 | [`docs/esquema-datos.md`](docs/esquema-datos.md) | Tablas, relaciones y políticas de seguridad por fila |
-| `docs/especificaciones.md` | Se crea antes de cada funcionalidad: pasos y criterios de aceptación verificables |
-| `docs/api.md` | Se crea con el código: cada endpoint con ruta, método, entrada y salida |
+| [`docs/surtido-inteligente.md`](docs/surtido-inteligente.md) | Algoritmo de la función estrella, fórmula del costo de riesgo, ejemplo trabajado |
+| [`docs/especificaciones.md`](docs/especificaciones.md) | Pasos y criterios de aceptación por funcionalidad, con la prueba que verifica cada uno |
+| [`docs/api.md`](docs/api.md) | Cada endpoint: ruta, método, entrada, salida y errores |
+| [`esquemas/`](esquemas) | JSON Schema de los datos y de las entradas de la API (`npm run esquemas`) |
 
-## Stack propuesto (pendiente de tu aprobación)
+## Cómo correrlo
+
+Requiere Node.js 22 o más reciente.
+
+```bash
+npm install
+```
+
+```bash
+npm run dev
+```
+
+Abre http://localhost:3000 y entra a **Armar mi surtido**. No necesita llaves ni base de datos: usa los datos de ejemplo de `src/data/`.
+
+| Comando | Qué hace |
+|---|---|
+| `npm test` | Pruebas unitarias (Vitest): motor del surtido, precios, envío, confianza y datos |
+| `npm run test:e2e` | Pruebas en navegador (Playwright) en celular y escritorio; compila antes con `npm run build` |
+| `npm run esquemas` | Regenera `esquemas/*.schema.json` desde `src/lib/esquemas.ts` |
+| `npm run build` | Compila para producción |
+
+### Variables de entorno
+
+| Variable | Para qué | Obligatoria |
+|---|---|---|
+| `NEXT_PUBLIC_SITE_URL` | URL pública (dominio propio cuando exista). Si falta, usa la URL de Vercel | No |
+| `ADMIN_EMAILS` | Correos de administración, separados por coma (bloque de cuentas) | Más adelante |
+
+## Estructura
+
+```
+src/
+  app/                 páginas (App Router) y API
+    page.tsx           portada
+    surtido/           página del Surtido inteligente
+    api/surtido/       POST /api/surtido
+  components/          iconos y piezas compartidas
+  data/                datos de ejemplo en JSON (marcados como datos de ejemplo)
+  lib/
+    surtido/           motor: precios, envío, confianza, búsqueda, explicaciones (+ pruebas)
+    catalogo.ts        carga y valida los datos; único punto que cambia al conectar la base
+    esquemas.ts        esquemas Zod (validación y JSON Schema)
+    limite.ts          límite de peticiones por IP
+e2e/                   pruebas en navegador
+docs/                  especificaciones, API, wireframes, esquema de datos, capturas
+```
+
+## Stack
 
 | Pieza | Propuesta | Por qué | Desventaja |
 |---|---|---|---|
@@ -28,13 +79,14 @@ Marketplace mexicano que conecta emprendedores con proveedores confiables. No es
 | Base de datos, cuentas y archivos | **Supabase** (Postgres + Auth + Storage + Realtime) | Políticas de seguridad por fila (RLS) reales en la base, Google login, archivos privados, chat en tiempo real, plan gratuito | El plan gratuito pausa proyectos inactivos 7 días |
 | Despliegue | **Vercel** | Se integra con GitHub (vista previa por cada PR), variables de entorno por ambiente | Límites del plan Hobby (uso no comercial) |
 | Pagos | **Simulados** (decisión de Monse, entrada 1 de la bitácora) detrás de una interfaz `PaymentProvider` intercambiable | Flujo completo (tarjeta de prueba, OXXO, SPEI, pago retenido, liberación) sin cobrar nada ni pedir tarjetas reales | Para cobrar de verdad hay que implementar un proveedor real (Stripe Connect o Mercado Pago) con la misma interfaz |
-| Envíos | **Envía.com API** (sandbox) | Cotiza varias paqueterías en una llamada, genera guías, webhooks de rastreo | Hay que fondear saldo para guías reales en producción |
-| Correo | **Resend** + plantillas React Email | API simple, plan gratuito (3,000 correos/mes) | Requiere verificar un dominio propio para enviar a cualquier destinatario |
+| Envíos | **Simulados** con tabla de tarifas por zona (decisión de Monse, entrada 2) | Totales exactos y reproducibles en las pruebas | No hay guías ni rastreo reales; un agregador (Envía.com) se conectaría después |
+| Correo | **Bandeja de avisos dentro de la app**, con adaptador listo para Resend (entrada 2) | Funciona sin dominio propio | Para correos reales hay que verificar un dominio |
 | WhatsApp | **WhatsApp Cloud API (Meta)**, solo dejado listo | Oficial y sin intermediarios | Requiere cuenta de Meta Business verificada y plantillas aprobadas |
 | Búsqueda | Postgres `unaccent` + `pg_trgm` | Tolerancia a acentos y errores sin servicio externo | Menos potente que Algolia en catálogos enormes |
 | Validación | **Zod** → JSON Schema | Un solo esquema valida en servidor y genera el JSON Schema documentado | — |
 | Pruebas | **Vitest** (unitarias) + **Playwright** (flujos completos) | Rápidas; Playwright recorre la app real en el navegador | — |
-| Límite de peticiones | Upstash Redis (o tabla en Postgres) | Protección contra abuso en registro, login y API | Un servicio más si usamos Upstash |
+| Límite de peticiones | En memoria por instancia (hoy); Upstash Redis cuando haya cuentas | Protección contra abuso en la API | En Vercel cada instancia lleva su propia cuenta |
+| Tipografías | Fraunces, IBM Plex Sans y Plex Mono autoalojadas (`@fontsource`) | Sin depender de Google Fonts en tiempo de ejecución | — |
 
 **Si algún día se conectan pagos reales — alternativas evaluadas:** Stripe Connect (retención y liberación controladas por la plataforma),  Mercado Pago Marketplace (muy conocido en México, OXXO y meses sin intereses, pero el control de cuándo se libera el dinero lo maneja Mercado Pago, no la plataforma) y Conekta (mexicano, buen OXXO/SPEI, pero sin un producto de marketplace con split y retención tan completo).
 
@@ -162,8 +214,9 @@ El detalle de cada tabla, columnas y políticas de seguridad está en [`docs/esq
 
 | # | Bloque | Estado |
 |---|---|---|
-| 0 | Planeación, stack, wireframes, diagramas | ✅ propuesta lista, esperando respuestas |
-| 1 | Base y cuentas | ⏳ |
+| 0 | Planeación, stack, wireframes, diagramas | ✅ |
+| ★ | **Surtido inteligente** (motor, API, página, portada) | ✅ 52 pruebas unitarias + 12 en navegador |
+| 1 | Base y cuentas | ⏳ siguiente |
 | 2 | Verificación y administración | ⏳ |
 | 3 | Tienda y catálogo | ⏳ |
 | 4 | Carrito | ⏳ |
@@ -174,6 +227,3 @@ El detalle de cada tabla, columnas y políticas de seguridad está en [`docs/esq
 | 9 | Avisos | ⏳ |
 | 10 | Legal y calidad | ⏳ |
 
-## Cómo correrlo
-
-Se documenta en cuanto exista el proyecto de Next.js (bloque 1).

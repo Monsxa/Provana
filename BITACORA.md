@@ -78,3 +78,44 @@ Marcas: **[SANDBOX]** = modo de pruebas, sin dinero ni envíos reales · **[REAL
 **Qué propuso Claude.** Fórmula exacta del costo de riesgo y de la confianza (0–100) con ejemplo numérico, en `docs/surtido-inteligente.md`.
 
 **Pendiente.** Que Monse apruebe la fórmula y decida si la comparación del surtido se hace con o sin IVA.
+
+---
+
+## 2026-11-09 · Entrada 3 · Bloque ★: Surtido inteligente construido y probado
+
+**Qué decidió Monse (sus palabras).** *"si, empieza a hacer la pagina"*, en respuesta a dos preguntas: aprobar la fórmula del costo de riesgo y elegir si el surtido compara con o sin IVA.
+
+**Interpretación de Claude (marcada como tal).** La respuesta se tomó como aprobación de la fórmula y de la opción recomendada: **comparar con IVA**. Queda configurable (`compararConIva` en `src/lib/surtido/tipos.ts`) por si Monse quiso decir otra cosa.
+
+**Qué se hizo.**
+- Proyecto Next.js 15 + TypeScript. La landing original se movió a `legacy/` y su estilo (tokens de color, Fraunces, IBM Plex, modo oscuro) pasó a `src/app/globals.css`.
+- Motor del surtido en `src/lib/surtido/` (precios por escalón, envío simulado, confianza, costo de riesgo, búsqueda exacta y aproximada, referencia "todo con uno", explicaciones).
+- Datos de ejemplo en `src/data/*.json`: 32 estados, 6 categorías, 14 tipos de producto, 12 proveedores ficticios y 32 productos, todos marcados como datos de ejemplo y validados con Zod. JSON Schema exportado en `esquemas/`.
+- `POST /api/surtido` con validación en servidor y límite de 30 solicitudes por minuto por IP.
+- Página `/surtido` y portada nueva. La portada muestra un cálculo real del motor, no una maqueta.
+
+**Cómo se probó.**
+- 52 pruebas unitarias (Vitest) cubren los criterios 1 a 11 de `docs/surtido-inteligente.md`: el ejemplo trabajado da exactamente $5,778.00 sin IVA y $6,702.48 con IVA, con referencia de $7,132.84 y ahorro de $430.36 (6.0 %).
+- **Prueba de que las pruebas detectan errores:** se rompió el costo de riesgo a propósito y fallaron 4 pruebas; se quitó el IVA del envío y fallaron 8. Después se restauró el código.
+- **Calidad de la búsqueda:** en 150 casos aleatorios contra la búsqueda exhaustiva, el método por subconjuntos encontró el óptimo en 150/150 y la heurística en 149/150, con brecha máxima de 0.93 %.
+- **Velocidad:** 12 proveedores × 10 productos en 48 ms; 40 proveedores × 15 productos en 82 ms (límite: 1 s).
+- 12 pruebas en navegador (Playwright) en celular (Pixel 7) y escritorio (1440 px): validación, cálculo, cambio de proveedor, ejemplo con ahorro, motivos sin proveedor y rechazo de datos inválidos.
+- Detector de diseño de impeccable sin hallazgos. Capturas en `docs/capturas/`.
+
+**Qué falló y causa raíz.**
+1. *Instalar Vitest 5 chocó con `@types/node` 20.* Causa: Vitest 5 pide `@types/node` ≥ 22.12. Se subió a `@types/node` 22.
+2. *Las primeras pruebas aleatorias daban 150/150 en ambos métodos.* Causa: los casos eran demasiado fáciles (envío barato frente al precio). Se agregaron casos con envío caro y apareció la primera diferencia real (149/150). Se dejó la prueba más exigente.
+3. *Prueba en navegador: el botón "Quitar" no tenía nombre accesible.* Causa: el nombre estaba en el ícono SVG y no en el botón. Se movió `aria-label` al botón.
+4. *Seis pruebas en navegador fallaron después de recompilar.* Causa: un servidor viejo seguía en el puerto 3100 sirviendo la compilación anterior, así que el JavaScript de la página no correspondía. No era un error de la app. Se detuvo el servidor viejo y pasaron las 12.
+5. *Las skills de diseño no se cargaban como skill.* Causa: se instalaron en `/home/user` y el proyecto vive en `/home/user/provana`. Se leyeron sus instrucciones directamente.
+
+**Decisiones de diseño (skills).**
+- **Impeccable:** se heredó el mundo visual de la landing. Su entrevista previa se omitió porque el brief de Monse ya respondía esas preguntas y pidió no interrumpir. Se quitaron las etiquetas pequeñas sobre los títulos.
+- **Taste:** se quitaron cifras inventadas ("1,280+ proveedores") y testimonios ficticios; las cifras ahora salen de los datos.
+- **Emil Kowalski:** curvas ease-out propias, botones que responden al presionar, entradas ≤ 300 ms y nada animado en acciones repetitivas.
+
+**Observaciones para Monse.**
+- Con la fórmula aprobada, un proveedor **sin historial** obtiene confianza 87/100 (calificación igual al promedio, 90 % de cumplimiento supuesto, respuesta sin datos = 0.5). Eso es más que un proveedor con historial regular. Si no te parece, se puede bajar la previa para nuevos.
+- En México muchos alimentos tienen IVA de 0 %. Por ahora el IVA se define por proveedor, como pediste; se puede refinar por producto.
+
+**Modo.** Todo **[SIMULADO]**: envíos con tabla de tarifas, sin pagos. Datos de ejemplo.

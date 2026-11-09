@@ -1,6 +1,6 @@
 # Surtido inteligente — propuesta de algoritmo
 
-> **Estado: propuesta, esperando aprobación de Monse.** No se programa hasta que esté aprobada (ver `BITACORA.md`, entrada 1).
+> **Estado: aprobado (bitácora, entradas 2 y 3) e implementado** en `src/lib/surtido/`. Pruebas: `src/lib/surtido/__tests__/`.
 
 ## Qué resuelve
 
@@ -109,7 +109,7 @@ Destino: **Jalisco**. Prioridad: **Ahorro**. Sin piezas extra.
 
 Tarifa de prueba: mismo estado $79 + $6 por kg; otro estado lejano $159 + $10 por kg (kg redondeados hacia arriba).
 
-**Resultado esperado:**
+**Resultado esperado** (sin IVA, como se aprobó; la prueba también verifica la versión con IVA: total **$6,702.48**, referencia **$7,132.84**, ahorro **$430.36 · 6.0 %**):
 - Velas y bolsas con **B**: $2,800 + $900 + envío de 20 kg $359 = **$4,059**.
 - Café con **D**: $1,580 + envío de 10 kg $139 = **$1,719**.
 - **Total: $5,778.00 MXN.**
