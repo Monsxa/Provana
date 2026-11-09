@@ -51,6 +51,6 @@ Marcas: **[SANDBOX]** = modo de pruebas, sin dinero ni envíos reales · **[REAL
 
 **Qué propuso Claude.** Algoritmo del Surtido inteligente en `docs/surtido-inteligente.md`, con un ejemplo trabajado (total esperado $5,778.00, ahorro $371.00 frente a "todo con uno") y 12 criterios de aceptación.
 
-**Cómo se probó.** El ejemplo se calculó con un script de fuerza bruta que prueba las 24 combinaciones posibles (2 × 3 × 4 opciones por renglón). Ese script se convertirá en la prueba de referencia.
+**Cómo se probó.** El ejemplo se calculó con un script de fuerza bruta que prueba las 12 combinaciones posibles (2 × 2 × 3 opciones por renglón). Ese script se convertirá en la prueba de referencia.
 
 **Estado.** Esperando aprobación del algoritmo.
