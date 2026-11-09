@@ -1,0 +1,78 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "estadoDestino": {
+      "type": "string",
+      "pattern": "^[A-Z]{2,5}$"
+    },
+    "prioridad": {
+      "default": "equilibrado",
+      "type": "string",
+      "enum": [
+        "ahorro",
+        "equilibrado",
+        "confianza"
+      ]
+    },
+    "permitirExtra": {
+      "default": false,
+      "type": "boolean"
+    },
+    "renglones": {
+      "minItems": 1,
+      "maxItems": 30,
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "tipoId": {
+            "type": "string",
+            "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$"
+          },
+          "cantidad": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 1000000
+          },
+          "variante": {
+            "anyOf": [
+              {
+                "type": "object",
+                "propertyNames": {
+                  "type": "string"
+                },
+                "additionalProperties": {
+                  "type": "string",
+                  "maxLength": 60
+                }
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "proveedorFijo": {
+            "anyOf": [
+              {
+                "type": "string",
+                "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "required": [
+          "tipoId",
+          "cantidad"
+        ]
+      }
+    }
+  },
+  "required": [
+    "estadoDestino",
+    "renglones"
+  ]
+}

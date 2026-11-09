@@ -1,0 +1,992 @@
+[
+  {
+    "id": "av-vela-lavanda",
+    "proveedorId": "aromas-del-valle",
+    "tipoId": "vela-soya-200g",
+    "nombre": "Vela de soya Bruma — lavanda",
+    "descripcion": "Cera de soya 100 %, vaso de vidrio reutilizable.",
+    "unidad": "pieza",
+    "variante": {
+      "aroma": "lavanda"
+    },
+    "precioMenudeo": 8900,
+    "escalones": [
+      {
+        "cantidadMinima": 12,
+        "precioUnitario": 7600
+      },
+      {
+        "cantidadMinima": 48,
+        "precioUnitario": 6200
+      }
+    ],
+    "pedidoMinimo": 6,
+    "existencias": 400,
+    "pesoKg": 0.3,
+    "medidas": {
+      "largoCm": 8,
+      "anchoCm": 8,
+      "altoCm": 9
+    },
+    "estado": "activo",
+    "maxDiasTransito": null,
+    "permisoSanitario": null,
+    "datosDeEjemplo": true
+  },
+  {
+    "id": "av-vela-vainilla",
+    "proveedorId": "aromas-del-valle",
+    "tipoId": "vela-soya-200g",
+    "nombre": "Vela de soya Bruma — vainilla",
+    "descripcion": "Cera de soya 100 %, vaso de vidrio reutilizable.",
+    "unidad": "pieza",
+    "variante": {
+      "aroma": "vainilla"
+    },
+    "precioMenudeo": 8900,
+    "escalones": [
+      {
+        "cantidadMinima": 12,
+        "precioUnitario": 7600
+      },
+      {
+        "cantidadMinima": 48,
+        "precioUnitario": 6200
+      }
+    ],
+    "pedidoMinimo": 6,
+    "existencias": 260,
+    "pesoKg": 0.3,
+    "medidas": {
+      "largoCm": 8,
+      "anchoCm": 8,
+      "altoCm": 9
+    },
+    "estado": "activo",
+    "maxDiasTransito": null,
+    "permisoSanitario": null,
+    "datosDeEjemplo": true
+  },
+  {
+    "id": "csm-vela-lavanda",
+    "proveedorId": "cereria-san-miguel",
+    "tipoId": "vela-soya-200g",
+    "nombre": "Vela de soya en vaso — lavanda",
+    "descripcion": "",
+    "unidad": "pieza",
+    "variante": {
+      "aroma": "lavanda"
+    },
+    "precioMenudeo": 8200,
+    "escalones": [
+      {
+        "cantidadMinima": 24,
+        "precioUnitario": 7100
+      },
+      {
+        "cantidadMinima": 100,
+        "precioUnitario": 5900
+      }
+    ],
+    "pedidoMinimo": 24,
+    "existencias": 900,
+    "pesoKg": 0.32,
+    "medidas": {
+      "largoCm": 8,
+      "anchoCm": 8,
+      "altoCm": 10
+    },
+    "estado": "activo",
+    "maxDiasTransito": null,
+    "permisoSanitario": null,
+    "datosDeEjemplo": true
+  },
+  {
+    "id": "csm-vela-canela",
+    "proveedorId": "cereria-san-miguel",
+    "tipoId": "vela-soya-200g",
+    "nombre": "Vela de soya en vaso — canela",
+    "descripcion": "",
+    "unidad": "pieza",
+    "variante": {
+      "aroma": "canela"
+    },
+    "precioMenudeo": 8200,
+    "escalones": [
+      {
+        "cantidadMinima": 24,
+        "precioUnitario": 7100
+      },
+      {
+        "cantidadMinima": 100,
+        "precioUnitario": 5900
+      }
+    ],
+    "pedidoMinimo": 24,
+    "existencias": 500,
+    "pesoKg": 0.32,
+    "medidas": {
+      "largoCm": 8,
+      "anchoCm": 8,
+      "altoCm": 10
+    },
+    "estado": "activo",
+    "maxDiasTransito": null,
+    "permisoSanitario": null,
+    "datosDeEjemplo": true
+  },
+  {
+    "id": "av-difusor",
+    "proveedorId": "aromas-del-valle",
+    "tipoId": "difusor-100ml",
+    "nombre": "Difusor de ratán Bruma 100 ml",
+    "descripcion": "",
+    "unidad": "pieza",
+    "variante": {
+      "aroma": "lavanda"
+    },
+    "precioMenudeo": 14500,
+    "escalones": [
+      {
+        "cantidadMinima": 12,
+        "precioUnitario": 12500
+      },
+      {
+        "cantidadMinima": 48,
+        "precioUnitario": 10900
+      }
+    ],
+    "pedidoMinimo": 6,
+    "existencias": 300,
+    "pesoKg": 0.28,
+    "medidas": {
+      "largoCm": 7,
+      "anchoCm": 7,
+      "altoCm": 20
+    },
+    "estado": "activo",
+    "maxDiasTransito": null,
+    "permisoSanitario": null,
+    "datosDeEjemplo": true
+  },
+  {
+    "id": "csm-difusor",
+    "proveedorId": "cereria-san-miguel",
+    "tipoId": "difusor-100ml",
+    "nombre": "Difusor aromático 100 ml",
+    "descripcion": "",
+    "unidad": "pieza",
+    "variante": {
+      "aroma": "lavanda"
+    },
+    "precioMenudeo": 13200,
+    "escalones": [
+      {
+        "cantidadMinima": 24,
+        "precioUnitario": 11500
+      }
+    ],
+    "pedidoMinimo": 12,
+    "existencias": 200,
+    "pesoKg": 0.3,
+    "medidas": {
+      "largoCm": 7,
+      "anchoCm": 7,
+      "altoCm": 22
+    },
+    "estado": "activo",
+    "maxDiasTransito": null,
+    "permisoSanitario": null,
+    "datosDeEjemplo": true
+  },
+  {
+    "id": "es-bolsa-med",
+    "proveedorId": "empaques-sureste",
+    "tipoId": "bolsa-kraft-mediana",
+    "nombre": "Bolsa kraft mediana con asa torcida",
+    "descripcion": "",
+    "unidad": "pieza",
+    "variante": null,
+    "precioMenudeo": 240,
+    "escalones": [
+      {
+        "cantidadMinima": 500,
+        "precioUnitario": 180
+      },
+      {
+        "cantidadMinima": 2000,
+        "precioUnitario": 135
+      }
+    ],
+    "pedidoMinimo": 200,
+    "existencias": 20000,
+    "pesoKg": 0.02,
+    "medidas": {
+      "largoCm": 32,
+      "anchoCm": 24,
+      "altoCm": 0.3
+    },
+    "estado": "activo",
+    "maxDiasTransito": null,
+    "permisoSanitario": null,
+    "datosDeEjemplo": true
+  },
+  {
+    "id": "es-bolsa-chica",
+    "proveedorId": "empaques-sureste",
+    "tipoId": "bolsa-kraft-chica",
+    "nombre": "Bolsa kraft chica con asa plana",
+    "descripcion": "",
+    "unidad": "pieza",
+    "variante": null,
+    "precioMenudeo": 180,
+    "escalones": [
+      {
+        "cantidadMinima": 500,
+        "precioUnitario": 140
+      },
+      {
+        "cantidadMinima": 2000,
+        "precioUnitario": 105
+      }
+    ],
+    "pedidoMinimo": 200,
+    "existencias": 20000,
+    "pesoKg": 0.014,
+    "medidas": {
+      "largoCm": 24,
+      "anchoCm": 18,
+      "altoCm": 0.3
+    },
+    "estado": "activo",
+    "maxDiasTransito": null,
+    "permisoSanitario": null,
+    "datosDeEjemplo": true
+  },
+  {
+    "id": "es-caja",
+    "proveedorId": "empaques-sureste",
+    "tipoId": "caja-envio-30x20x15",
+    "nombre": "Caja de envío corrugada 30×20×15",
+    "descripcion": "",
+    "unidad": "pieza",
+    "variante": null,
+    "precioMenudeo": 950,
+    "escalones": [
+      {
+        "cantidadMinima": 100,
+        "precioUnitario": 780
+      },
+      {
+        "cantidadMinima": 500,
+        "precioUnitario": 640
+      }
+    ],
+    "pedidoMinimo": 50,
+    "existencias": 8000,
+    "pesoKg": 0.22,
+    "medidas": {
+      "largoCm": 50,
+      "anchoCm": 35,
+      "altoCm": 0.6
+    },
+    "estado": "activo",
+    "maxDiasTransito": null,
+    "permisoSanitario": null,
+    "datosDeEjemplo": true
+  },
+  {
+    "id": "es-etiqueta",
+    "proveedorId": "empaques-sureste",
+    "tipoId": "etiqueta-redonda-5cm",
+    "nombre": "Rollo de etiquetas redondas 5 cm (500)",
+    "descripcion": "",
+    "unidad": "rollo",
+    "variante": null,
+    "precioMenudeo": 14500,
+    "escalones": [
+      {
+        "cantidadMinima": 10,
+        "precioUnitario": 12900
+      }
+    ],
+    "pedidoMinimo": 2,
+    "existencias": 600,
+    "pesoKg": 0.35,
+    "medidas": {
+      "largoCm": 14,
+      "anchoCm": 14,
+      "altoCm": 5
+    },
+    "estado": "activo",
+    "maxDiasTransito": null,
+    "permisoSanitario": null,
+    "datosDeEjemplo": true
+  },
+  {
+    "id": "pmc-bolsa-med",
+    "proveedorId": "papeleria-mayoreo-centro",
+    "tipoId": "bolsa-kraft-mediana",
+    "nombre": "Bolsa kraft 24×32 cm",
+    "descripcion": "",
+    "unidad": "pieza",
+    "variante": null,
+    "precioMenudeo": 260,
+    "escalones": [
+      {
+        "cantidadMinima": 500,
+        "precioUnitario": 195
+      },
+      {
+        "cantidadMinima": 1000,
+        "precioUnitario": 170
+      }
+    ],
+    "pedidoMinimo": 100,
+    "existencias": 15000,
+    "pesoKg": 0.022,
+    "medidas": {
+      "largoCm": 32,
+      "anchoCm": 24,
+      "altoCm": 0.3
+    },
+    "estado": "activo",
+    "maxDiasTransito": null,
+    "permisoSanitario": null,
+    "datosDeEjemplo": true
+  },
+  {
+    "id": "pmc-bolsa-chica",
+    "proveedorId": "papeleria-mayoreo-centro",
+    "tipoId": "bolsa-kraft-chica",
+    "nombre": "Bolsa kraft 18×24 cm",
+    "descripcion": "",
+    "unidad": "pieza",
+    "variante": null,
+    "precioMenudeo": 190,
+    "escalones": [
+      {
+        "cantidadMinima": 500,
+        "precioUnitario": 150
+      }
+    ],
+    "pedidoMinimo": 100,
+    "existencias": 15000,
+    "pesoKg": 0.015,
+    "medidas": {
+      "largoCm": 24,
+      "anchoCm": 18,
+      "altoCm": 0.3
+    },
+    "estado": "activo",
+    "maxDiasTransito": null,
+    "permisoSanitario": null,
+    "datosDeEjemplo": true
+  },
+  {
+    "id": "pmc-etiqueta",
+    "proveedorId": "papeleria-mayoreo-centro",
+    "tipoId": "etiqueta-redonda-5cm",
+    "nombre": "Etiquetas redondas blancas 5 cm (rollo de 500)",
+    "descripcion": "",
+    "unidad": "rollo",
+    "variante": null,
+    "precioMenudeo": 13800,
+    "escalones": [
+      {
+        "cantidadMinima": 10,
+        "precioUnitario": 12200
+      },
+      {
+        "cantidadMinima": 50,
+        "precioUnitario": 10900
+      }
+    ],
+    "pedidoMinimo": 1,
+    "existencias": 900,
+    "pesoKg": 0.36,
+    "medidas": {
+      "largoCm": 14,
+      "anchoCm": 14,
+      "altoCm": 5
+    },
+    "estado": "activo",
+    "maxDiasTransito": null,
+    "permisoSanitario": null,
+    "datosDeEjemplo": true
+  },
+  {
+    "id": "eco-charola",
+    "proveedorId": "ecoempaques-mx",
+    "tipoId": "charola-bambu-mediana",
+    "nombre": "Charola de bambú biodegradable",
+    "descripcion": "",
+    "unidad": "pieza",
+    "variante": null,
+    "precioMenudeo": 690,
+    "escalones": [
+      {
+        "cantidadMinima": 200,
+        "precioUnitario": 520
+      },
+      {
+        "cantidadMinima": 1000,
+        "precioUnitario": 395
+      }
+    ],
+    "pedidoMinimo": 100,
+    "existencias": 10000,
+    "pesoKg": 0.04,
+    "medidas": {
+      "largoCm": 25,
+      "anchoCm": 18,
+      "altoCm": 2
+    },
+    "estado": "activo",
+    "maxDiasTransito": null,
+    "permisoSanitario": null,
+    "datosDeEjemplo": true
+  },
+  {
+    "id": "eco-bolsa-comp",
+    "proveedorId": "ecoempaques-mx",
+    "tipoId": "bolsa-compostable-mediana",
+    "nombre": "Bolsa compostable 30×40 cm",
+    "descripcion": "",
+    "unidad": "pieza",
+    "variante": null,
+    "precioMenudeo": 390,
+    "escalones": [
+      {
+        "cantidadMinima": 500,
+        "precioUnitario": 310
+      },
+      {
+        "cantidadMinima": 2000,
+        "precioUnitario": 260
+      }
+    ],
+    "pedidoMinimo": 200,
+    "existencias": 12000,
+    "pesoKg": 0.012,
+    "medidas": {
+      "largoCm": 40,
+      "anchoCm": 30,
+      "altoCm": 0.2
+    },
+    "estado": "activo",
+    "maxDiasTransito": null,
+    "permisoSanitario": null,
+    "datosDeEjemplo": true
+  },
+  {
+    "id": "eco-bolsa-kraft",
+    "proveedorId": "ecoempaques-mx",
+    "tipoId": "bolsa-kraft-mediana",
+    "nombre": "Bolsa kraft reciclada 24×32 cm",
+    "descripcion": "",
+    "unidad": "pieza",
+    "variante": null,
+    "precioMenudeo": 270,
+    "escalones": [
+      {
+        "cantidadMinima": 500,
+        "precioUnitario": 205
+      }
+    ],
+    "pedidoMinimo": 200,
+    "existencias": 8000,
+    "pesoKg": 0.021,
+    "medidas": {
+      "largoCm": 32,
+      "anchoCm": 24,
+      "altoCm": 0.3
+    },
+    "estado": "activo",
+    "maxDiasTransito": null,
+    "permisoSanitario": null,
+    "datosDeEjemplo": true
+  },
+  {
+    "id": "eco-caja",
+    "proveedorId": "ecoempaques-mx",
+    "tipoId": "caja-envio-30x20x15",
+    "nombre": "Caja reciclada 30×20×15",
+    "descripcion": "",
+    "unidad": "pieza",
+    "variante": null,
+    "precioMenudeo": 1050,
+    "escalones": [
+      {
+        "cantidadMinima": 100,
+        "precioUnitario": 850
+      }
+    ],
+    "pedidoMinimo": 50,
+    "existencias": 4000,
+    "pesoKg": 0.23,
+    "medidas": {
+      "largoCm": 50,
+      "anchoCm": 35,
+      "altoCm": 0.6
+    },
+    "estado": "activo",
+    "maxDiasTransito": null,
+    "permisoSanitario": null,
+    "datosDeEjemplo": true
+  },
+  {
+    "id": "den-bolsa-med",
+    "proveedorId": "distribuidora-express-nl",
+    "tipoId": "bolsa-kraft-mediana",
+    "nombre": "Bolsa kraft económica",
+    "descripcion": "",
+    "unidad": "pieza",
+    "variante": null,
+    "precioMenudeo": 190,
+    "escalones": [
+      {
+        "cantidadMinima": 500,
+        "precioUnitario": 140
+      }
+    ],
+    "pedidoMinimo": 500,
+    "existencias": 30000,
+    "pesoKg": 0.02,
+    "medidas": {
+      "largoCm": 32,
+      "anchoCm": 24,
+      "altoCm": 0.3
+    },
+    "estado": "activo",
+    "maxDiasTransito": null,
+    "permisoSanitario": null,
+    "datosDeEjemplo": true
+  },
+  {
+    "id": "den-caja",
+    "proveedorId": "distribuidora-express-nl",
+    "tipoId": "caja-envio-30x20x15",
+    "nombre": "Caja corrugada económica",
+    "descripcion": "",
+    "unidad": "pieza",
+    "variante": null,
+    "precioMenudeo": 780,
+    "escalones": [
+      {
+        "cantidadMinima": 100,
+        "precioUnitario": 590
+      }
+    ],
+    "pedidoMinimo": 100,
+    "existencias": 10000,
+    "pesoKg": 0.2,
+    "medidas": {
+      "largoCm": 50,
+      "anchoCm": 35,
+      "altoCm": 0.6
+    },
+    "estado": "activo",
+    "maxDiasTransito": null,
+    "permisoSanitario": null,
+    "datosDeEjemplo": true
+  },
+  {
+    "id": "flc-cafe",
+    "proveedorId": "finca-los-cerros",
+    "tipoId": "cafe-altura-1kg",
+    "nombre": "Café de altura tueste medio — grano 1 kg",
+    "descripcion": "",
+    "unidad": "kg",
+    "variante": null,
+    "precioMenudeo": 18500,
+    "escalones": [
+      {
+        "cantidadMinima": 10,
+        "precioUnitario": 16500
+      },
+      {
+        "cantidadMinima": 50,
+        "precioUnitario": 14800
+      }
+    ],
+    "pedidoMinimo": 5,
+    "existencias": 800,
+    "pesoKg": 1.05,
+    "medidas": {
+      "largoCm": 22,
+      "anchoCm": 13,
+      "altoCm": 8
+    },
+    "estado": "activo",
+    "maxDiasTransito": null,
+    "permisoSanitario": "declarado-con-documento",
+    "datosDeEjemplo": true
+  },
+  {
+    "id": "cr-cafe",
+    "proveedorId": "cafe-rapido",
+    "tipoId": "cafe-altura-1kg",
+    "nombre": "Café tostado para cafetería 1 kg",
+    "descripcion": "",
+    "unidad": "kg",
+    "variante": null,
+    "precioMenudeo": 17000,
+    "escalones": [
+      {
+        "cantidadMinima": 10,
+        "precioUnitario": 15800
+      }
+    ],
+    "pedidoMinimo": 5,
+    "existencias": 300,
+    "pesoKg": 1.05,
+    "medidas": {
+      "largoCm": 22,
+      "anchoCm": 13,
+      "altoCm": 8
+    },
+    "estado": "activo",
+    "maxDiasTransito": null,
+    "permisoSanitario": "declarado",
+    "datosDeEjemplo": true
+  },
+  {
+    "id": "av-cafe",
+    "proveedorId": "aromas-del-valle",
+    "tipoId": "cafe-altura-1kg",
+    "nombre": "Café de Los Altos 1 kg",
+    "descripcion": "",
+    "unidad": "kg",
+    "variante": null,
+    "precioMenudeo": 19000,
+    "escalones": [
+      {
+        "cantidadMinima": 10,
+        "precioUnitario": 17500
+      }
+    ],
+    "pedidoMinimo": 5,
+    "existencias": 120,
+    "pesoKg": 1.05,
+    "medidas": {
+      "largoCm": 22,
+      "anchoCm": 13,
+      "altoCm": 8
+    },
+    "estado": "activo",
+    "maxDiasTransito": null,
+    "permisoSanitario": "declarado",
+    "datosDeEjemplo": true
+  },
+  {
+    "id": "mh-miel",
+    "proveedorId": "miel-de-la-huasteca",
+    "tipoId": "miel-500g",
+    "nombre": "Miel cruda multifloral 500 g",
+    "descripcion": "",
+    "unidad": "pieza",
+    "variante": null,
+    "precioMenudeo": 9500,
+    "escalones": [
+      {
+        "cantidadMinima": 24,
+        "precioUnitario": 8200
+      },
+      {
+        "cantidadMinima": 96,
+        "precioUnitario": 7100
+      }
+    ],
+    "pedidoMinimo": 12,
+    "existencias": 1500,
+    "pesoKg": 0.72,
+    "medidas": {
+      "largoCm": 9,
+      "anchoCm": 9,
+      "altoCm": 12
+    },
+    "estado": "activo",
+    "maxDiasTransito": null,
+    "permisoSanitario": "declarado-con-documento",
+    "datosDeEjemplo": true
+  },
+  {
+    "id": "flc-miel",
+    "proveedorId": "finca-los-cerros",
+    "tipoId": "miel-500g",
+    "nombre": "Miel de cafetal 500 g",
+    "descripcion": "",
+    "unidad": "pieza",
+    "variante": null,
+    "precioMenudeo": 10800,
+    "escalones": [
+      {
+        "cantidadMinima": 24,
+        "precioUnitario": 9400
+      }
+    ],
+    "pedidoMinimo": 12,
+    "existencias": 300,
+    "pesoKg": 0.72,
+    "medidas": {
+      "largoCm": 9,
+      "anchoCm": 9,
+      "altoCm": 12
+    },
+    "estado": "activo",
+    "maxDiasTransito": null,
+    "permisoSanitario": "declarado",
+    "datosDeEjemplo": true
+  },
+  {
+    "id": "tn-playera-ch",
+    "proveedorId": "textiles-nortena",
+    "tipoId": "playera-algodon",
+    "nombre": "Playera básica de algodón — talla CH",
+    "descripcion": "",
+    "unidad": "pieza",
+    "variante": {
+      "talla": "CH"
+    },
+    "precioMenudeo": 9500,
+    "escalones": [
+      {
+        "cantidadMinima": 25,
+        "precioUnitario": 7800
+      },
+      {
+        "cantidadMinima": 100,
+        "precioUnitario": 6500
+      }
+    ],
+    "pedidoMinimo": 12,
+    "existencias": 600,
+    "pesoKg": 0.18,
+    "medidas": {
+      "largoCm": 30,
+      "anchoCm": 25,
+      "altoCm": 2
+    },
+    "estado": "activo",
+    "maxDiasTransito": null,
+    "permisoSanitario": null,
+    "datosDeEjemplo": true
+  },
+  {
+    "id": "tn-playera-m",
+    "proveedorId": "textiles-nortena",
+    "tipoId": "playera-algodon",
+    "nombre": "Playera básica de algodón — talla M",
+    "descripcion": "",
+    "unidad": "pieza",
+    "variante": {
+      "talla": "M"
+    },
+    "precioMenudeo": 9500,
+    "escalones": [
+      {
+        "cantidadMinima": 25,
+        "precioUnitario": 7800
+      },
+      {
+        "cantidadMinima": 100,
+        "precioUnitario": 6500
+      }
+    ],
+    "pedidoMinimo": 12,
+    "existencias": 900,
+    "pesoKg": 0.18,
+    "medidas": {
+      "largoCm": 30,
+      "anchoCm": 25,
+      "altoCm": 2
+    },
+    "estado": "activo",
+    "maxDiasTransito": null,
+    "permisoSanitario": null,
+    "datosDeEjemplo": true
+  },
+  {
+    "id": "tn-playera-g",
+    "proveedorId": "textiles-nortena",
+    "tipoId": "playera-algodon",
+    "nombre": "Playera básica de algodón — talla G",
+    "descripcion": "",
+    "unidad": "pieza",
+    "variante": {
+      "talla": "G"
+    },
+    "precioMenudeo": 9500,
+    "escalones": [
+      {
+        "cantidadMinima": 25,
+        "precioUnitario": 7800
+      },
+      {
+        "cantidadMinima": 100,
+        "precioUnitario": 6500
+      }
+    ],
+    "pedidoMinimo": 12,
+    "existencias": 700,
+    "pesoKg": 0.18,
+    "medidas": {
+      "largoCm": 30,
+      "anchoCm": 25,
+      "altoCm": 2
+    },
+    "estado": "activo",
+    "maxDiasTransito": null,
+    "permisoSanitario": null,
+    "datosDeEjemplo": true
+  },
+  {
+    "id": "tn-tote",
+    "proveedorId": "textiles-nortena",
+    "tipoId": "tote-manta",
+    "nombre": "Tote de manta cruda",
+    "descripcion": "",
+    "unidad": "pieza",
+    "variante": null,
+    "precioMenudeo": 4500,
+    "escalones": [
+      {
+        "cantidadMinima": 50,
+        "precioUnitario": 3600
+      },
+      {
+        "cantidadMinima": 200,
+        "precioUnitario": 2900
+      }
+    ],
+    "pedidoMinimo": 25,
+    "existencias": 2000,
+    "pesoKg": 0.12,
+    "medidas": {
+      "largoCm": 40,
+      "anchoCm": 38,
+      "altoCm": 1
+    },
+    "estado": "activo",
+    "maxDiasTransito": null,
+    "permisoSanitario": null,
+    "datosDeEjemplo": true
+  },
+  {
+    "id": "bla-tote",
+    "proveedorId": "bordados-los-altos",
+    "tipoId": "tote-manta",
+    "nombre": "Tote de manta con bordado",
+    "descripcion": "",
+    "unidad": "pieza",
+    "variante": null,
+    "precioMenudeo": 8900,
+    "escalones": [
+      {
+        "cantidadMinima": 20,
+        "precioUnitario": 7500
+      }
+    ],
+    "pedidoMinimo": 10,
+    "existencias": 150,
+    "pesoKg": 0.15,
+    "medidas": {
+      "largoCm": 40,
+      "anchoCm": 38,
+      "altoCm": 1
+    },
+    "estado": "activo",
+    "maxDiasTransito": null,
+    "permisoSanitario": null,
+    "datosDeEjemplo": true
+  },
+  {
+    "id": "mo-jabon",
+    "proveedorId": "manos-de-oaxaca",
+    "tipoId": "jabon-avena-100g",
+    "nombre": "Jabón artesanal de avena",
+    "descripcion": "",
+    "unidad": "pieza",
+    "variante": null,
+    "precioMenudeo": 3400,
+    "escalones": [
+      {
+        "cantidadMinima": 50,
+        "precioUnitario": 2700
+      },
+      {
+        "cantidadMinima": 200,
+        "precioUnitario": 2100
+      }
+    ],
+    "pedidoMinimo": 20,
+    "existencias": 3000,
+    "pesoKg": 0.11,
+    "medidas": {
+      "largoCm": 8,
+      "anchoCm": 6,
+      "altoCm": 3
+    },
+    "estado": "activo",
+    "maxDiasTransito": null,
+    "permisoSanitario": "declarado-con-documento",
+    "datosDeEjemplo": true
+  },
+  {
+    "id": "mo-shampoo",
+    "proveedorId": "manos-de-oaxaca",
+    "tipoId": "shampoo-solido-80g",
+    "nombre": "Shampoo sólido de romero",
+    "descripcion": "",
+    "unidad": "pieza",
+    "variante": null,
+    "precioMenudeo": 7800,
+    "escalones": [
+      {
+        "cantidadMinima": 50,
+        "precioUnitario": 6500
+      }
+    ],
+    "pedidoMinimo": 20,
+    "existencias": 1200,
+    "pesoKg": 0.09,
+    "medidas": {
+      "largoCm": 7,
+      "anchoCm": 7,
+      "altoCm": 3
+    },
+    "estado": "activo",
+    "maxDiasTransito": null,
+    "permisoSanitario": "declarado",
+    "datosDeEjemplo": true
+  },
+  {
+    "id": "av-jabon",
+    "proveedorId": "aromas-del-valle",
+    "tipoId": "jabon-avena-100g",
+    "nombre": "Jabón de avena y lavanda",
+    "descripcion": "",
+    "unidad": "pieza",
+    "variante": null,
+    "precioMenudeo": 3900,
+    "escalones": [
+      {
+        "cantidadMinima": 48,
+        "precioUnitario": 3100
+      }
+    ],
+    "pedidoMinimo": 12,
+    "existencias": 800,
+    "pesoKg": 0.11,
+    "medidas": {
+      "largoCm": 8,
+      "anchoCm": 6,
+      "altoCm": 3
+    },
+    "estado": "activo",
+    "maxDiasTransito": null,
+    "permisoSanitario": "declarado",
+    "datosDeEjemplo": true
+  }
+]

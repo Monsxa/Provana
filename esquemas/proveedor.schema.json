@@ -1,0 +1,119 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$"
+    },
+    "nombre": {
+      "type": "string",
+      "minLength": 1
+    },
+    "estado": {
+      "type": "string",
+      "pattern": "^[A-Z]{2,5}$"
+    },
+    "ciudad": {
+      "type": "string",
+      "minLength": 1
+    },
+    "verificacion": {
+      "type": "string",
+      "enum": [
+        "en_revision",
+        "verificado",
+        "rechazado"
+      ]
+    },
+    "cobraIva": {
+      "type": "boolean"
+    },
+    "diasPreparacion": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 9007199254740991
+    },
+    "enviaA": {
+      "minItems": 1,
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^[A-Z]{2,5}$"
+      }
+    },
+    "desde": {
+      "type": "string",
+      "format": "date",
+      "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))$"
+    },
+    "descripcion": {
+      "type": "string"
+    },
+    "estadisticas": {
+      "type": "object",
+      "properties": {
+        "sumaEstrellas": {
+          "type": "number",
+          "minimum": 0
+        },
+        "numResenas": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "pedidosCerrados": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "pedidosCompletados": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "disputasPerdidas": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "horasRespuesta": {
+          "anyOf": [
+            {
+              "type": "number",
+              "minimum": 0
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "sumaEstrellas",
+        "numResenas",
+        "pedidosCerrados",
+        "pedidosCompletados",
+        "disputasPerdidas",
+        "horasRespuesta"
+      ]
+    },
+    "datosDeEjemplo": {
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "id",
+    "nombre",
+    "estado",
+    "ciudad",
+    "verificacion",
+    "cobraIva",
+    "diasPreparacion",
+    "enviaA",
+    "desde",
+    "descripcion",
+    "estadisticas",
+    "datosDeEjemplo"
+  ]
+}

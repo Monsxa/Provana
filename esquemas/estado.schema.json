@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "clave": {
+      "type": "string",
+      "pattern": "^[A-Z]{2,5}$"
+    },
+    "nombre": {
+      "type": "string",
+      "minLength": 1
+    },
+    "region": {
+      "type": "string",
+      "minLength": 1
+    }
+  },
+  "required": [
+    "clave",
+    "nombre",
+    "region"
+  ]
+}

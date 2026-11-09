@@ -1,0 +1,38 @@
+[
+  {
+    "id": "hogar",
+    "nombre": "Hogar y decoración",
+    "padreId": null,
+    "requierePermiso": false
+  },
+  {
+    "id": "empaque",
+    "nombre": "Empaque",
+    "padreId": null,
+    "requierePermiso": false
+  },
+  {
+    "id": "empaque-sostenible",
+    "nombre": "Empaque sostenible",
+    "padreId": "empaque",
+    "requierePermiso": false
+  },
+  {
+    "id": "alimentos",
+    "nombre": "Alimentos y bebidas",
+    "padreId": null,
+    "requierePermiso": true
+  },
+  {
+    "id": "textiles",
+    "nombre": "Ropa y textiles",
+    "padreId": null,
+    "requierePermiso": false
+  },
+  {
+    "id": "cuidado",
+    "nombre": "Cuidado personal",
+    "padreId": null,
+    "requierePermiso": true
+  }
+]

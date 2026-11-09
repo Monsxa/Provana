@@ -1,0 +1,180 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$"
+    },
+    "proveedorId": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$"
+    },
+    "tipoId": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$"
+    },
+    "nombre": {
+      "type": "string",
+      "minLength": 1
+    },
+    "descripcion": {
+      "type": "string"
+    },
+    "unidad": {
+      "type": "string",
+      "enum": [
+        "pieza",
+        "kg",
+        "caja",
+        "rollo",
+        "paquete",
+        "litro",
+        "metro"
+      ]
+    },
+    "variante": {
+      "anyOf": [
+        {
+          "type": "object",
+          "propertyNames": {
+            "type": "string"
+          },
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "precioMenudeo": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 9007199254740991,
+      "description": "Monto en centavos de peso (MXN), sin IVA"
+    },
+    "escalones": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "cantidadMinima": {
+            "type": "integer",
+            "exclusiveMinimum": 0,
+            "maximum": 9007199254740991
+          },
+          "precioUnitario": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991,
+            "description": "Monto en centavos de peso (MXN), sin IVA"
+          }
+        },
+        "required": [
+          "cantidadMinima",
+          "precioUnitario"
+        ]
+      }
+    },
+    "pedidoMinimo": {
+      "type": "integer",
+      "exclusiveMinimum": 0,
+      "maximum": 9007199254740991
+    },
+    "existencias": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 9007199254740991
+    },
+    "pesoKg": {
+      "type": "number",
+      "exclusiveMinimum": 0
+    },
+    "medidas": {
+      "anyOf": [
+        {
+          "type": "object",
+          "properties": {
+            "largoCm": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            },
+            "anchoCm": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            },
+            "altoCm": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            }
+          },
+          "required": [
+            "largoCm",
+            "anchoCm",
+            "altoCm"
+          ]
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "estado": {
+      "type": "string",
+      "enum": [
+        "activo",
+        "pausado"
+      ]
+    },
+    "maxDiasTransito": {
+      "anyOf": [
+        {
+          "type": "integer",
+          "exclusiveMinimum": 0,
+          "maximum": 9007199254740991
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "permisoSanitario": {
+      "anyOf": [
+        {
+          "type": "string",
+          "enum": [
+            "declarado",
+            "declarado-con-documento"
+          ]
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "datosDeEjemplo": {
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "id",
+    "proveedorId",
+    "tipoId",
+    "nombre",
+    "descripcion",
+    "unidad",
+    "variante",
+    "precioMenudeo",
+    "escalones",
+    "pedidoMinimo",
+    "existencias",
+    "pesoKg",
+    "medidas",
+    "estado",
+    "maxDiasTransito",
+    "permisoSanitario",
+    "datosDeEjemplo"
+  ]
+}

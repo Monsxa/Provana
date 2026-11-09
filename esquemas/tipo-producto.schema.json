@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$"
+    },
+    "nombre": {
+      "type": "string",
+      "minLength": 1
+    },
+    "categoriaId": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$"
+    },
+    "unidad": {
+      "type": "string",
+      "enum": [
+        "pieza",
+        "kg",
+        "caja",
+        "rollo",
+        "paquete",
+        "litro",
+        "metro"
+      ]
+    },
+    "descripcion": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "id",
+    "nombre",
+    "categoriaId",
+    "unidad",
+    "descripcion"
+  ]
+}
