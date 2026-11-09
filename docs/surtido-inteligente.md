@@ -29,7 +29,7 @@ Se agrega la tabla `product_types (id, category_id, name, spec, unit)` y la colu
    - Peso cobrable = el mayor entre el peso real y el volumétrico (largo × ancho × alto ÷ 5000).
    - El costo sale de una tabla de tarifas por zona (local, regional, nacional, zona extendida), configurable por el administrador.
    - En el checkout se usa la cotización de la paquetería.
-5. **Sumar un "costo de riesgo" según la confianza.** Solo se usa para decidir; nunca se cobra ni aparece en tu total.
+5. **Sumar un "costo de riesgo" según la confianza** (fórmula exacta en la sección "Costo de riesgo"). Solo se usa para decidir; nunca se cobra ni aparece en tu total.
    - A un proveedor con menos confianza se le suma un porcentaje virtual: `riesgo = (100 − confianza) / 100 × peso`.
    - Peso según la prioridad que elijas: **Ahorro** 0%, **Equilibrado** 10% (predeterminado), **Confianza** 25%.
    - La **confianza (0–100)** sale de datos reales: calificación con promedio bayesiano, porcentaje de pedidos completados, disputas perdidas y tiempo de respuesta.
@@ -43,6 +43,52 @@ Se agrega la tabla `product_types (id, category_id, name, spec, unit)` y la colu
 9. **Mandar al carrito.** Con un botón se agrega todo al carrito, ya agrupado por proveedor. Se puede cambiar el proveedor de cualquier renglón y el total se recalcula en el momento.
 
 Todo el dinero se maneja en **centavos enteros** y los precios incluyen IVA (desglosado en pantalla).
+
+## Costo de riesgo: fórmula exacta
+
+Para cada proveedor `s` dentro de una combinación:
+
+```
+subtotal_s       = productos_s + envío_s                       (lo que pagarías a ese proveedor)
+riesgo_s         = subtotal_s × p × (100 − confianza_s) / 100
+costo_efectivo   = Σ_s (subtotal_s + riesgo_s)                 (solo para decidir)
+total_mostrado   = Σ_s subtotal_s                              (lo que realmente pagas)
+```
+
+- `p` = peso de la prioridad: **Ahorro 0.00 · Equilibrado 0.10 · Confianza 0.25** (valores iniciales, configurables por el administrador).
+- `confianza_s` entre 0 y 100. Si es **menor a 60** (configurable), el proveedor queda fuera antes de calcular.
+- Todo en centavos enteros. `riesgo_s` se redondea al centavo (mitad hacia arriba).
+- Se gana la combinación con menor `costo_efectivo`; el `riesgo` **nunca** aparece en el total que pagas.
+
+### Confianza (0–100), calculada con datos reales
+
+```
+confianza = 100 × (0.50·Q + 0.30·K + 0.10·D + 0.10·R)
+```
+
+| Componente | Fórmula | Lectura |
+|---|---|---|
+| Q · calificación | `(bayes − 1) / 4`, con `bayes = (10·m + Σ estrellas) / (10 + n)` y `m` = promedio de la plataforma | 5★ → 1, 1★ → 0 |
+| K · cumplimiento | `(completados + 10·0.90) / (pedidos_cerrados + 10)` | pedidos completados entre pedidos cerrados, con previa de 90% |
+| D · disputas | `max(0, 1 − 10 × disputas_perdidas / pedidos_cerrados)` | 10% de disputas perdidas → 0 |
+| R · respuesta | `min(1, max(0, (48 − h) / 46))`, `h` = mediana de horas para la primera respuesta | ≤ 2 h → 1, ≥ 48 h → 0; sin datos → 0.5 |
+
+### Ejemplo numérico
+
+Café de la lista (10 kg a Jalisco), prioridad **Equilibrado** (`p = 0.10`):
+
+| Proveedor | Subtotal (café + envío) | Confianza | Riesgo | Costo efectivo |
+|---|---|---|---|---|
+| D · Café Rápido | $1,580 + $139 = **$1,719.00** | 70 | 1,719 × 0.10 × 0.30 = **$51.57** | **$1,770.57** ✓ |
+| C · Finca Los Cerros | $1,650 + $259 = **$1,909.00** | 92 | 1,909 × 0.10 × 0.08 = **$15.27** | $1,924.27 |
+
+Gana D: es $190 más barato y el riesgo solo le suma $51.57. Con prioridad **Confianza** (`p = 0.25`): D = 1,719 + 128.93 = $1,847.93; C = 1,909 + 38.18 = $1,947.18; sigue ganando D. C solo ganaría con `p > 0.52`.
+
+Caso donde la confianza **sí cambia** la decisión: un tercer proveedor E con confianza 95 que cobra $1,760.00 en total.
+- D: 1,719 + 51.57 = **$1,770.57**
+- E: 1,760 + 1,760 × 0.10 × 0.05 = 1,760 + 8.80 = **$1,768.80** ✓
+
+En Equilibrado gana E: pagas $41 más por 25 puntos más de confianza. Regla práctica: con `p = 0.10`, la confianza decide cuando los precios están a menos de ~2.5% de diferencia por cada 25 puntos de confianza.
 
 ## Ejemplo trabajado (servirá como prueba automática)
 

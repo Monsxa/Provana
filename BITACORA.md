@@ -54,3 +54,27 @@ Marcas: **[SANDBOX]** = modo de pruebas, sin dinero ni envíos reales · **[REAL
 **Cómo se probó.** El ejemplo se calculó con un script de fuerza bruta que prueba las 12 combinaciones posibles (2 × 2 × 3 opciones por renglón). Ese script se convertirá en la prueba de referencia.
 
 **Estado.** Esperando aprobación del algoritmo.
+
+---
+
+## 2026-11-09 · Entrada 2 · Aprobación del algoritmo y reglas de negocio
+
+**Qué decidió Monse (sus palabras).**
+1. *"Apruebo el algoritmo. Antes de programarlo, muéstrame la fórmula exacta del 'costo de riesgo' con un ejemplo numérico. Dejo la confianza mínima en 60 y los porcentajes (0 / 10 / 25) como valores iniciales configurables."*
+2. *"Sí a los 'tipos de producto'. El proveedor elige el tipo de una lista al publicar, y el administrador puede crear tipos nuevos."*
+3. *"Comisión de 8% solo sobre productos, configurable desde el panel de administración; cancelación gratis hasta antes de 'preparando'; disputas decididas solo por el administrador, con reembolsos parciales permitidos."*
+4. *"Envíos: simúlalos con la tabla de tarifas, sin Envía.com ni cotizaciones reales, para que las pruebas den totales exactos."*
+5. *"IA: la agregamos después de que el algoritmo esté probado. Empieza con Haiku 5.5, pruébalo con mis ejemplos y solo cambia a Opus 5.5 si falla. La IA solo extrae los renglones; el cálculo lo hace el algoritmo."*
+- Dominio: *"todavía no tengo. Usa la URL gratuita que asigne Vercel. Para los correos usa el remitente de pruebas del servicio de correo, o simúlalos dentro de la app (por ejemplo, una bandeja de avisos). Deja el dominio como variable de configuración."*
+- IVA: *"el proveedor indica si cobra IVA; precios capturados sin IVA y mostrados como '+ IVA (16%)'."*
+- Categorías: *"las de la landing, con 'Empaque sostenible' como subcategoría de 'Empaque', administrables desde el panel."*
+- Permisos sanitarios: *"basta con que el proveedor declare que los tiene; si sube el documento, recibe una insignia extra."*
+- Administrador: correo proporcionado por Monse. **Se guarda en la variable de entorno `ADMIN_EMAILS`, no en el código**, porque el repositorio es público.
+- Datos de prueba: *"sí, los proveedores ficticios marcados como 'datos de ejemplo'."*
+- Prioridad: *"primero la función estrella (Surtido inteligente) funcionando y probada, luego cuentas, catálogo y carrito, después pedidos con pagos simulados y reseñas, y al final el panel de proveedor y los detalles. Cuando termines cada bloque, dime qué quedó listo para que yo lo vea en la URL de Vercel antes de seguir."*
+
+**Consecuencias.** Envía.com y Resend con dominio propio salen del stack; los envíos usan una tabla de tarifas **[SIMULADO]** y los correos se muestran en una bandeja de avisos dentro de la app **[SIMULADO]**, con un adaptador de correo listo para conectar después. El orden de trabajo cambia: el Surtido inteligente va primero.
+
+**Qué propuso Claude.** Fórmula exacta del costo de riesgo y de la confianza (0–100) con ejemplo numérico, en `docs/surtido-inteligente.md`.
+
+**Pendiente.** Que Monse apruebe la fórmula y decida si la comparación del surtido se hace con o sin IVA.
