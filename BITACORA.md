@@ -30,3 +30,27 @@ Marcas: **[SANDBOX]** = modo de pruebas, sin dinero ni envíos reales · **[REAL
 **Herramientas usadas en esta fase.**
 - `gh`/`git`: leer el repositorio.
 - Skills instaladas: `design-taste-frontend` (taste), `impeccable` y 18 skills de Emil Kowalski (animación y diseño). Se aplicarán al construir la interfaz.
+
+---
+
+## 2026-11-09 · Entrada 1 · Cambio de enfoque: pagos simulados y función estrella
+
+**Qué decidió Monse (sus palabras).**
+- Pagos: *"NO conectes Stripe, Mercado Pago ni ningún proveedor real. Todo el flujo de pago es una simulación que se ve profesional y real (pantalla de pago, métodos, confirmación, comprobante, estado 'pago retenido' y liberación al confirmar la entrega), pero sin cobrar nada. Deja una capa de pagos intercambiable por si algún día se conecta uno real. Muestra siempre un aviso visible de 'Modo demostración: no uses tarjetas reales' y no guardes ni pidas datos de tarjetas reales; usa datos de prueba."*
+- Reglas de dinero: *"Comisión, liberación a los 5 días, cancelaciones y disputas: mantén las reglas que te di, pero todo simulado y configurable desde el panel de administración."*
+- Prioridad: *"Tu esfuerzo principal debe ir a UNA función estrella que funcione muy bien de verdad: el 'Surtido inteligente'."*
+- Proceso: *"Antes de programarla, propón el algoritmo en palabras sencillas y muéstramelo para que yo lo apruebe."*
+- IA: *"Si quieres que entienda texto libre con IA, dime qué servicio, cuánto cuesta y qué llave necesito. Primero hazlo funcionar con productos y cantidades elegidos por el usuario."*
+- El resto de funciones: *"debe funcionar bien, pero con menos prioridad que la función estrella."*
+
+**Consecuencias.**
+- Stripe sale del stack. Se crea una interfaz `PaymentProvider` con una implementación `SimulatedProvider` **[SIMULADO]**. Un proveedor real se conectaría implementando la misma interfaz.
+- Ya no hacen falta cuentas de Stripe ni el aviso legal de retención de fondos mientras sea simulado.
+
+**Aclaración registrada.** Monse pidió mantener "las reglas que te di" de comisión, cancelaciones y disputas, pero esas preguntas (4, 7, 8 y 9 del bloque inicial) no se habían contestado todavía. Los 5 días de liberación coinciden con la propuesta de Claude. Se pregunta de nuevo antes de fijar valores.
+
+**Qué propuso Claude.** Algoritmo del Surtido inteligente en `docs/surtido-inteligente.md`, con un ejemplo trabajado (total esperado $5,778.00, ahorro $371.00 frente a "todo con uno") y 12 criterios de aceptación.
+
+**Cómo se probó.** El ejemplo se calculó con un script de fuerza bruta que prueba las 24 combinaciones posibles (2 × 3 × 4 opciones por renglón). Ese script se convertirá en la prueba de referencia.
+
+**Estado.** Esperando aprobación del algoritmo.

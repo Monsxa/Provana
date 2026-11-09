@@ -2,6 +2,8 @@
 
 Marketplace mexicano que conecta emprendedores con proveedores confiables. No es un directorio: cada proveedor tiene su tienda con productos, precios de menudeo y mayoreo, existencias y condiciones de compra. El comprador busca, compara, verifica, compra, elige envío y recibe, todo dentro de Provana, con el pago retenido hasta que confirma la entrega.
 
+> **Función estrella: [Surtido inteligente](docs/surtido-inteligente.md)** — arma la mejor combinación de proveedores para tu lista.
+>
 > **Estado actual: planeación.** Este documento contiene la propuesta de stack, los diagramas y el esquema de datos. Todavía no hay código de la aplicación; la landing original sigue en `index.html`. Las decisiones pendientes están en [`BITACORA.md`](BITACORA.md).
 
 - **Alcance:** solo México (32 estados), solo proveedores mexicanos, solo MXN con IVA desglosado, todo en español de México.
@@ -25,7 +27,7 @@ Marketplace mexicano que conecta emprendedores con proveedores confiables. No es
 | App web | **Next.js (App Router) + TypeScript** | Páginas renderizadas en servidor (SEO de productos), API en el mismo proyecto, PWA posible | Curva de aprendizaje de Server Components |
 | Base de datos, cuentas y archivos | **Supabase** (Postgres + Auth + Storage + Realtime) | Políticas de seguridad por fila (RLS) reales en la base, Google login, archivos privados, chat en tiempo real, plan gratuito | El plan gratuito pausa proyectos inactivos 7 días |
 | Despliegue | **Vercel** | Se integra con GitHub (vista previa por cada PR), variables de entorno por ambiente | Límites del plan Hobby (uso no comercial) |
-| Pagos | **Stripe Connect** (cargos y transferencias separados) | Permite retener el dinero y transferir al proveedor cuando quieras, menos la comisión; tarjeta, OXXO y transferencia SPEI; sandbox completo | Retención máxima ~90 días; las comisiones de Stripe las paga la plataforma; el proveedor debe completar alta (KYC) en Stripe |
+| Pagos | **Simulados** (decisión de Monse, entrada 1 de la bitácora) detrás de una interfaz `PaymentProvider` intercambiable | Flujo completo (tarjeta de prueba, OXXO, SPEI, pago retenido, liberación) sin cobrar nada ni pedir tarjetas reales | Para cobrar de verdad hay que implementar un proveedor real (Stripe Connect o Mercado Pago) con la misma interfaz |
 | Envíos | **Envía.com API** (sandbox) | Cotiza varias paqueterías en una llamada, genera guías, webhooks de rastreo | Hay que fondear saldo para guías reales en producción |
 | Correo | **Resend** + plantillas React Email | API simple, plan gratuito (3,000 correos/mes) | Requiere verificar un dominio propio para enviar a cualquier destinatario |
 | WhatsApp | **WhatsApp Cloud API (Meta)**, solo dejado listo | Oficial y sin intermediarios | Requiere cuenta de Meta Business verificada y plantillas aprobadas |
@@ -34,7 +36,7 @@ Marketplace mexicano que conecta emprendedores con proveedores confiables. No es
 | Pruebas | **Vitest** (unitarias) + **Playwright** (flujos completos) | Rápidas; Playwright recorre la app real en el navegador | — |
 | Límite de peticiones | Upstash Redis (o tabla en Postgres) | Protección contra abuso en registro, login y API | Un servicio más si usamos Upstash |
 
-**Alternativas consideradas para pagos:** Mercado Pago Marketplace (muy conocido en México, OXXO y meses sin intereses, pero el control de cuándo se libera el dinero lo maneja Mercado Pago, no la plataforma) y Conekta (mexicano, buen OXXO/SPEI, pero sin un producto de marketplace con split y retención tan completo).
+**Si algún día se conectan pagos reales — alternativas evaluadas:** Stripe Connect (retención y liberación controladas por la plataforma),  Mercado Pago Marketplace (muy conocido en México, OXXO y meses sin intereses, pero el control de cuándo se libera el dinero lo maneja Mercado Pago, no la plataforma) y Conekta (mexicano, buen OXXO/SPEI, pero sin un producto de marketplace con split y retención tan completo).
 
 **Aviso legal:** retener dinero de terceros en México puede tocar la Ley Fintech. Usar el producto de marketplace de un procesador autorizado (Stripe, Mercado Pago) reduce el riesgo porque el procesador custodia los fondos, pero esto debe revisarlo un abogado antes de pasar a producción.
 
