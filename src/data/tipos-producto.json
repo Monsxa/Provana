@@ -1,0 +1,100 @@
+[
+  {
+    "id": "vela-soya-200g",
+    "nombre": "Vela de soya 200 g",
+    "categoriaId": "hogar",
+    "unidad": "pieza",
+    "descripcion": "Vaso de vidrio, cera de soya, mecha de algodón, 40 h de duración aprox."
+  },
+  {
+    "id": "difusor-100ml",
+    "nombre": "Difusor aromático 100 ml",
+    "categoriaId": "hogar",
+    "unidad": "pieza",
+    "descripcion": "Frasco de vidrio con varillas de ratán."
+  },
+  {
+    "id": "bolsa-kraft-mediana",
+    "nombre": "Bolsa kraft mediana 24×32 cm",
+    "categoriaId": "empaque",
+    "unidad": "pieza",
+    "descripcion": "Papel kraft 90 g con asa torcida."
+  },
+  {
+    "id": "bolsa-kraft-chica",
+    "nombre": "Bolsa kraft chica 18×24 cm",
+    "categoriaId": "empaque",
+    "unidad": "pieza",
+    "descripcion": "Papel kraft 80 g con asa plana."
+  },
+  {
+    "id": "caja-envio-30x20x15",
+    "nombre": "Caja de envío 30×20×15 cm",
+    "categoriaId": "empaque",
+    "unidad": "pieza",
+    "descripcion": "Cartón corrugado sencillo, se entrega plana."
+  },
+  {
+    "id": "etiqueta-redonda-5cm",
+    "nombre": "Rollo de 500 etiquetas redondas 5 cm",
+    "categoriaId": "empaque",
+    "unidad": "rollo",
+    "descripcion": "Papel adhesivo blanco mate."
+  },
+  {
+    "id": "charola-bambu-mediana",
+    "nombre": "Charola de bambú mediana",
+    "categoriaId": "empaque-sostenible",
+    "unidad": "pieza",
+    "descripcion": "Biodegradable, 25×18 cm."
+  },
+  {
+    "id": "bolsa-compostable-mediana",
+    "nombre": "Bolsa compostable mediana",
+    "categoriaId": "empaque-sostenible",
+    "unidad": "pieza",
+    "descripcion": "Almidón de maíz, 30×40 cm."
+  },
+  {
+    "id": "cafe-altura-1kg",
+    "nombre": "Café de altura tostado 1 kg",
+    "categoriaId": "alimentos",
+    "unidad": "kg",
+    "descripcion": "Grano entero, tueste medio."
+  },
+  {
+    "id": "miel-500g",
+    "nombre": "Miel de abeja 500 g",
+    "categoriaId": "alimentos",
+    "unidad": "pieza",
+    "descripcion": "Frasco de vidrio."
+  },
+  {
+    "id": "playera-algodon",
+    "nombre": "Playera básica de algodón",
+    "categoriaId": "textiles",
+    "unidad": "pieza",
+    "descripcion": "Algodón peinado 180 g, cuello redondo."
+  },
+  {
+    "id": "tote-manta",
+    "nombre": "Bolsa tote de manta",
+    "categoriaId": "textiles",
+    "unidad": "pieza",
+    "descripcion": "Manta cruda 38×42 cm con asas."
+  },
+  {
+    "id": "jabon-avena-100g",
+    "nombre": "Jabón artesanal de avena 100 g",
+    "categoriaId": "cuidado",
+    "unidad": "pieza",
+    "descripcion": "Glicerina vegetal y avena."
+  },
+  {
+    "id": "shampoo-solido-80g",
+    "nombre": "Shampoo sólido 80 g",
+    "categoriaId": "cuidado",
+    "unidad": "pieza",
+    "descripcion": "Sin sulfatos, empaque de cartón."
+  }
+]

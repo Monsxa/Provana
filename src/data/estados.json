@@ -1,0 +1,162 @@
+[
+  {
+    "clave": "AGS",
+    "nombre": "Aguascalientes",
+    "region": "Bajío"
+  },
+  {
+    "clave": "BC",
+    "nombre": "Baja California",
+    "region": "Noroeste"
+  },
+  {
+    "clave": "BCS",
+    "nombre": "Baja California Sur",
+    "region": "Noroeste"
+  },
+  {
+    "clave": "CAMP",
+    "nombre": "Campeche",
+    "region": "Sureste"
+  },
+  {
+    "clave": "CHIS",
+    "nombre": "Chiapas",
+    "region": "Sur"
+  },
+  {
+    "clave": "CHIH",
+    "nombre": "Chihuahua",
+    "region": "Norte"
+  },
+  {
+    "clave": "CDMX",
+    "nombre": "Ciudad de México",
+    "region": "Centro"
+  },
+  {
+    "clave": "COAH",
+    "nombre": "Coahuila",
+    "region": "Noreste"
+  },
+  {
+    "clave": "COL",
+    "nombre": "Colima",
+    "region": "Occidente"
+  },
+  {
+    "clave": "DGO",
+    "nombre": "Durango",
+    "region": "Norte"
+  },
+  {
+    "clave": "GTO",
+    "nombre": "Guanajuato",
+    "region": "Bajío"
+  },
+  {
+    "clave": "GRO",
+    "nombre": "Guerrero",
+    "region": "Sur"
+  },
+  {
+    "clave": "HGO",
+    "nombre": "Hidalgo",
+    "region": "Centro"
+  },
+  {
+    "clave": "JAL",
+    "nombre": "Jalisco",
+    "region": "Occidente"
+  },
+  {
+    "clave": "MEX",
+    "nombre": "Estado de México",
+    "region": "Centro"
+  },
+  {
+    "clave": "MICH",
+    "nombre": "Michoacán",
+    "region": "Occidente"
+  },
+  {
+    "clave": "MOR",
+    "nombre": "Morelos",
+    "region": "Centro"
+  },
+  {
+    "clave": "NAY",
+    "nombre": "Nayarit",
+    "region": "Occidente"
+  },
+  {
+    "clave": "NL",
+    "nombre": "Nuevo León",
+    "region": "Noreste"
+  },
+  {
+    "clave": "OAX",
+    "nombre": "Oaxaca",
+    "region": "Sur"
+  },
+  {
+    "clave": "PUE",
+    "nombre": "Puebla",
+    "region": "Centro"
+  },
+  {
+    "clave": "QRO",
+    "nombre": "Querétaro",
+    "region": "Bajío"
+  },
+  {
+    "clave": "QROO",
+    "nombre": "Quintana Roo",
+    "region": "Sureste"
+  },
+  {
+    "clave": "SLP",
+    "nombre": "San Luis Potosí",
+    "region": "Bajío"
+  },
+  {
+    "clave": "SIN",
+    "nombre": "Sinaloa",
+    "region": "Noroeste"
+  },
+  {
+    "clave": "SON",
+    "nombre": "Sonora",
+    "region": "Noroeste"
+  },
+  {
+    "clave": "TAB",
+    "nombre": "Tabasco",
+    "region": "Golfo"
+  },
+  {
+    "clave": "TAMPS",
+    "nombre": "Tamaulipas",
+    "region": "Noreste"
+  },
+  {
+    "clave": "TLAX",
+    "nombre": "Tlaxcala",
+    "region": "Centro"
+  },
+  {
+    "clave": "VER",
+    "nombre": "Veracruz",
+    "region": "Golfo"
+  },
+  {
+    "clave": "YUC",
+    "nombre": "Yucatán",
+    "region": "Sureste"
+  },
+  {
+    "clave": "ZAC",
+    "nombre": "Zacatecas",
+    "region": "Bajío"
+  }
+]

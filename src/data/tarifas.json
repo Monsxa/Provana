@@ -1,0 +1,32 @@
+{
+  "zonas": {
+    "local": {
+      "base": 7900,
+      "porKg": 600,
+      "diasMin": 1,
+      "diasMax": 2
+    },
+    "regional": {
+      "base": 11900,
+      "porKg": 800,
+      "diasMin": 2,
+      "diasMax": 3
+    },
+    "nacional": {
+      "base": 15900,
+      "porKg": 1000,
+      "diasMin": 3,
+      "diasMax": 5
+    }
+  },
+  "zonaExtendida": {
+    "estados": [
+      "BCS",
+      "CHIS",
+      "QROO"
+    ],
+    "recargo": 9000,
+    "diasExtra": 2
+  },
+  "divisorVolumetrico": 5000
+}

@@ -1,0 +1,802 @@
+/* ==========================================================================
+   Piezas compartidas de la app (tienda, cuentas, paneles).
+   Misma familia visual: tokens de globals.css, cuadrícula de 8 px, sombras en capas.
+   ========================================================================== */
+
+.pagina {
+  padding-top: var(--e-6);
+  display: grid;
+  gap: var(--e-5);
+  align-content: start;
+}
+.pagina-cabecera {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--e-3) var(--e-5);
+  justify-content: space-between;
+  align-items: end;
+}
+.pagina-cabecera h1 {
+  font-size: clamp(30px, 4.4vw, 44px);
+}
+.pagina-cabecera p {
+  color: var(--ink-soft);
+  max-width: 62ch;
+  margin-top: var(--e-2);
+}
+.tarjeta {
+  background: var(--surface);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  padding: var(--e-5);
+  display: grid;
+  gap: var(--e-4);
+  align-content: start;
+  min-width: 0;
+}
+.tarjeta h2 {
+  font-size: 21px;
+}
+.tarjeta h3 {
+  font-size: 17px;
+}
+.pila {
+  display: grid;
+  gap: var(--e-3);
+  align-content: start;
+  min-width: 0;
+}
+.fila {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--e-2) var(--e-3);
+  align-items: center;
+}
+.fila-entre {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--e-2) var(--e-3);
+  align-items: center;
+  justify-content: space-between;
+}
+.rejilla-2 {
+  display: grid;
+  gap: var(--e-4);
+}
+@media (min-width: 900px) {
+  .rejilla-2 {
+    grid-template-columns: 1fr 1fr;
+  }
+  .rejilla-lateral {
+    grid-template-columns: minmax(0, 1fr) 360px;
+    align-items: start;
+  }
+}
+.rejilla-lateral {
+  display: grid;
+  gap: var(--e-5);
+}
+.suave {
+  color: var(--ink-soft);
+}
+.chico {
+  font-size: 13.5px;
+}
+.precio-destacado {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+}
+.separador {
+  border: 0;
+  border-top: 1px solid var(--line);
+  margin: 0;
+  width: 100%;
+}
+
+/* ---------- Formularios ---------- */
+.campo {
+  display: grid;
+  gap: 6px;
+  min-width: 0;
+}
+.campo > label,
+.campo > .etiqueta {
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--ink-soft);
+}
+.campo input:not([type="checkbox"]):not([type="radio"]):not([type="range"]),
+.campo select,
+.campo textarea {
+  width: 100%;
+  min-height: 44px;
+  padding: 10px 12px;
+  border-radius: var(--radius-sm);
+  border: 1.5px solid var(--line-strong);
+  background: var(--bg);
+  font-size: 16px;
+  transition: border-color var(--t-rapida) ease;
+}
+.campo textarea {
+  min-height: 96px;
+  resize: vertical;
+}
+.campo input:focus-visible,
+.campo select:focus-visible,
+.campo textarea:focus-visible {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-tint);
+}
+.campo [aria-invalid="true"] {
+  border-color: var(--danger);
+}
+.ayuda {
+  font-size: 13px;
+  color: var(--ink-soft);
+}
+.error-campo,
+.error-form {
+  color: var(--danger);
+  font-size: 13.5px;
+}
+.error-form {
+  background: var(--danger-tint);
+  padding: 10px 14px;
+  border-radius: var(--radius-sm);
+}
+.ok-form {
+  background: var(--accent-tint);
+  color: var(--accent);
+  padding: 10px 14px;
+  border-radius: var(--radius-sm);
+  font-size: 14px;
+  font-weight: 600;
+}
+.casilla {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  font-size: 14.5px;
+  cursor: pointer;
+  min-height: 32px;
+}
+.casilla input {
+  width: 20px;
+  height: 20px;
+  margin: 2px 0 0;
+  accent-color: var(--accent);
+  flex: none;
+}
+.campos-2 {
+  display: grid;
+  gap: var(--e-3);
+}
+@media (min-width: 560px) {
+  .campos-2 {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+/* ---------- Pestañas ---------- */
+.pestanas {
+  display: flex;
+  gap: 4px;
+  overflow-x: auto;
+  padding: 4px;
+  background: var(--surface-2);
+  border-radius: 999px;
+  scrollbar-width: none;
+}
+.pestanas a,
+.pestanas button {
+  flex: none;
+  min-height: 40px;
+  padding: 8px 16px;
+  border-radius: 999px;
+  border: 0;
+  background: none;
+  font-size: 14.5px;
+  font-weight: 600;
+  color: var(--ink-soft);
+  text-decoration: none;
+  cursor: pointer;
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: background-color var(--t-rapida) var(--ease-out), color var(--t-rapida) ease;
+}
+.pestanas [aria-current="page"],
+.pestanas [aria-selected="true"] {
+  background: var(--surface);
+  color: var(--ink);
+  box-shadow: var(--shadow-sm);
+}
+.contador {
+  min-width: 20px;
+  height: 20px;
+  padding: 0 6px;
+  border-radius: 999px;
+  background: var(--amber);
+  color: #241705;
+  font-size: 11.5px;
+  font-weight: 700;
+  display: inline-grid;
+  place-items: center;
+}
+
+/* ---------- Tablas ---------- */
+.tabla-envoltura {
+  overflow-x: auto;
+}
+.tabla {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14.5px;
+}
+.tabla th,
+.tabla td {
+  text-align: left;
+  padding: 12px 10px 12px 0;
+  border-bottom: 1px solid var(--line);
+  vertical-align: top;
+}
+.tabla thead th {
+  font-size: 12.5px;
+  color: var(--ink-soft);
+  font-weight: 600;
+  border-bottom-color: var(--line-strong);
+}
+.tabla .der {
+  text-align: right;
+}
+
+/* ---------- Etiquetas de estado ---------- */
+.estado {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12.5px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: var(--surface-2);
+  color: var(--ink-soft);
+  white-space: nowrap;
+}
+.estado[data-tono="verde"] {
+  background: var(--accent-tint);
+  color: var(--accent);
+}
+.estado[data-tono="ambar"] {
+  background: var(--amber-tint);
+  color: var(--amber-ink);
+}
+.estado[data-tono="rojo"] {
+  background: var(--danger-tint);
+  color: var(--danger);
+}
+
+/* ---------- Tarjeta de producto ---------- */
+.rejilla-productos {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--e-4);
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 250px), 1fr));
+}
+.producto-tarjeta {
+  position: relative;
+  background: var(--surface);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  display: grid;
+  grid-template-rows: auto 1fr;
+  overflow: hidden;
+  transition: transform var(--t-media) var(--ease-out), box-shadow var(--t-media) var(--ease-out);
+}
+@media (hover: hover) and (pointer: fine) {
+  .producto-tarjeta:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow);
+  }
+}
+.producto-tarjeta-cuerpo {
+  padding: var(--e-4);
+  display: grid;
+  gap: 8px;
+  align-content: start;
+}
+.producto-tarjeta-titulo {
+  font-size: 16.5px;
+  line-height: 1.25;
+}
+.producto-tarjeta-titulo a {
+  text-decoration: none;
+}
+.producto-tarjeta-titulo a::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+}
+.producto-tarjeta .sobre {
+  position: relative;
+  z-index: 1;
+}
+.ilustracion {
+  aspect-ratio: 4 / 3;
+  display: grid;
+  place-items: center;
+  background: var(--accent-tint);
+  color: var(--accent);
+  overflow: hidden;
+}
+.ilustracion svg {
+  width: 38%;
+  height: auto;
+}
+.ilustracion img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.boton-icono {
+  width: 44px;
+  height: 44px;
+  display: inline-grid;
+  place-items: center;
+  border-radius: 999px;
+  border: 0;
+  background: var(--surface);
+  color: var(--ink-soft);
+  box-shadow: var(--shadow-sm);
+  cursor: pointer;
+  transition: transform var(--t-rapida) var(--ease-out), color var(--t-rapida) ease;
+}
+.boton-icono:active {
+  transform: scale(0.94);
+}
+.boton-icono svg {
+  width: 20px;
+  height: 20px;
+}
+.boton-icono[aria-pressed="true"] {
+  color: var(--danger);
+}
+.boton-icono[aria-pressed="true"] svg {
+  fill: currentColor;
+}
+
+/* ---------- Pasos del checkout ---------- */
+.progreso {
+  display: grid;
+  gap: 10px;
+}
+.progreso-barra {
+  height: 6px;
+  border-radius: 999px;
+  background: var(--surface-3);
+  overflow: hidden;
+}
+.progreso-barra span {
+  display: block;
+  height: 100%;
+  background: var(--accent);
+  border-radius: inherit;
+  transform-origin: left;
+  transition: transform var(--t-pagina) var(--ease-out);
+}
+.progreso ol {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  color: var(--ink-faint);
+  font-weight: 600;
+}
+.progreso li[aria-current="step"] {
+  color: var(--accent);
+}
+
+/* ---------- Opciones seleccionables ---------- */
+.opciones {
+  display: grid;
+  gap: 8px;
+}
+.opcion {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  padding: 12px 14px;
+  border-radius: var(--radius-md);
+  border: 1.5px solid var(--line-strong);
+  cursor: pointer;
+  min-height: 56px;
+  transition: border-color var(--t-rapida) ease, background-color var(--t-rapida) ease;
+}
+.opcion:has(input:checked) {
+  border-color: var(--accent);
+  background: var(--accent-tint);
+}
+.opcion:has(input:focus-visible) {
+  outline: 2.5px solid var(--accent);
+  outline-offset: 2px;
+}
+.opcion input {
+  accent-color: var(--accent);
+  width: 18px;
+  height: 18px;
+  flex: none;
+}
+.opcion-texto {
+  flex: 1;
+  display: grid;
+  gap: 2px;
+}
+
+/* ---------- Línea de tiempo del pedido ---------- */
+.linea-tiempo {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+}
+.linea-tiempo li {
+  position: relative;
+  display: grid;
+  grid-template-columns: 32px 1fr;
+  gap: 12px;
+  padding-bottom: 20px;
+}
+.linea-tiempo li:not(:last-child)::before {
+  content: "";
+  position: absolute;
+  left: 15px;
+  top: 30px;
+  bottom: 0;
+  width: 2px;
+  background: var(--surface-3);
+}
+.linea-tiempo li[data-hecho]:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  left: 15px;
+  top: 30px;
+  bottom: 0;
+  width: 2px;
+  background: var(--accent);
+  transform-origin: top;
+  animation: trazo-linea 400ms var(--ease-out) both;
+  animation-delay: calc(var(--i, 0) * 120ms);
+}
+@keyframes trazo-linea {
+  from {
+    transform: scaleY(0);
+  }
+}
+.punto {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: var(--surface-2);
+  color: var(--ink-faint);
+  position: relative;
+  z-index: 1;
+}
+li[data-hecho] .punto {
+  background: var(--accent);
+  color: var(--accent-on);
+}
+.punto svg {
+  width: 18px;
+  height: 18px;
+}
+/* La palomita se traza sola. */
+.palomita path {
+  stroke-dasharray: 24;
+  stroke-dashoffset: 24;
+  animation: trazo 350ms var(--ease-out) forwards;
+  animation-delay: calc(var(--i, 0) * 120ms + 150ms);
+}
+@keyframes trazo {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .palomita path {
+    stroke-dashoffset: 0;
+  }
+}
+
+/* ---------- Avisos flotantes ---------- */
+.toasts {
+  position: fixed;
+  z-index: 70;
+  right: 16px;
+  bottom: 16px;
+  display: grid;
+  gap: 8px;
+  width: min(380px, calc(100vw - 32px));
+  pointer-events: none;
+}
+@media (max-width: 760px) {
+  .toasts {
+    bottom: calc(80px + env(safe-area-inset-bottom));
+  }
+}
+.toast {
+  pointer-events: auto;
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  background: var(--panel);
+  color: var(--panel-ink);
+  padding: 12px 14px;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg);
+  font-size: 14.5px;
+  animation: toast-entrar var(--t-lenta) var(--ease-out);
+}
+.toast[data-saliendo] {
+  animation: toast-salir var(--t-rapida) var(--ease-out) forwards;
+}
+.toast svg {
+  width: 18px;
+  height: 18px;
+  flex: none;
+  margin-top: 2px;
+  color: var(--verde-300);
+}
+.toast a {
+  color: var(--verde-200);
+  font-weight: 600;
+}
+@keyframes toast-entrar {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.98);
+  }
+}
+@keyframes toast-salir {
+  to {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+}
+
+/* ---------- Barra flotante del comparador ---------- */
+.comparador-barra {
+  position: fixed;
+  z-index: 25;
+  left: 50%;
+  bottom: 16px;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  background: var(--panel);
+  color: var(--panel-ink);
+  padding: 8px 8px 8px 16px;
+  border-radius: 999px;
+  box-shadow: var(--shadow-lg);
+  font-size: 14.5px;
+  animation: barra-entrar var(--t-lenta) var(--ease-out);
+  max-width: calc(100vw - 32px);
+}
+@media (max-width: 760px) {
+  .comparador-barra {
+    bottom: calc(84px + env(safe-area-inset-bottom));
+  }
+}
+@keyframes barra-entrar {
+  from {
+    opacity: 0;
+    transform: translate(-50%, 12px);
+  }
+}
+
+/* ---------- Estado vacío ---------- */
+.vacio-estado {
+  display: grid;
+  justify-items: center;
+  text-align: center;
+  gap: var(--e-3);
+  padding: var(--e-7) var(--e-5);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  box-shadow: var(--shadow-sm);
+}
+.vacio-estado .icono-grande {
+  width: 56px;
+  height: 56px;
+  border-radius: 16px;
+  display: grid;
+  place-items: center;
+  background: var(--accent-tint);
+  color: var(--accent);
+}
+.vacio-estado .icono-grande svg {
+  width: 26px;
+  height: 26px;
+}
+.vacio-estado p {
+  color: var(--ink-soft);
+  max-width: 46ch;
+}
+
+/* ---------- Estrellas ---------- */
+.estrellas {
+  display: inline-flex;
+  gap: 2px;
+  color: var(--amber);
+}
+.estrellas svg {
+  width: 16px;
+  height: 16px;
+}
+.estrellas svg[data-llena] {
+  fill: currentColor;
+}
+
+/* ---------- Gráfica de barras ---------- */
+.grafica {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 10px;
+  align-items: end;
+  height: 160px;
+}
+.grafica div {
+  display: grid;
+  gap: 6px;
+  align-items: end;
+  height: 100%;
+  text-align: center;
+  font-size: 12px;
+  color: var(--ink-soft);
+}
+.grafica span.barra {
+  display: block;
+  background: var(--accent);
+  border-radius: 6px 6px 2px 2px;
+  transform-origin: bottom;
+  animation: crecer 500ms var(--ease-out) both;
+  animation-delay: calc(var(--i, 0) * 50ms);
+}
+@keyframes crecer {
+  from {
+    transform: scaleY(0);
+  }
+}
+
+/* ---------- Mensajes ---------- */
+.chat {
+  display: grid;
+  gap: 8px;
+  max-height: 420px;
+  overflow-y: auto;
+  padding: 4px;
+}
+.burbuja {
+  max-width: 80%;
+  padding: 10px 14px;
+  border-radius: 14px;
+  background: var(--surface-2);
+  font-size: 14.5px;
+}
+.burbuja[data-mia] {
+  justify-self: end;
+  background: var(--accent);
+  color: var(--accent-on);
+}
+.burbuja time {
+  display: block;
+  font-size: 11.5px;
+  opacity: 0.75;
+  margin-top: 2px;
+}
+
+/* ---------- Mapa de estados (mosaico) ---------- */
+.mosaico-estados {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(92px, 1fr));
+  gap: 6px;
+}
+.mosaico-estados button,
+.mosaico-estados > span {
+  border: 0;
+  text-align: left;
+  font: inherit;
+  cursor: pointer;
+  display: grid;
+  gap: 2px;
+  padding: 10px;
+  border-radius: var(--radius-sm);
+  background: var(--surface-2);
+  font-size: 12.5px;
+  text-decoration: none;
+  min-height: 56px;
+}
+.mosaico-estados [data-n="0"] {
+  color: var(--ink-faint);
+}
+.mosaico-estados > span {
+  cursor: default;
+}
+.mosaico-estados button[data-n]:not([data-n="0"]) {
+  background: var(--accent-tint-2);
+  color: var(--accent-strong);
+  font-weight: 600;
+}
+
+/* ---------- Cabecera: cuenta, carrito, avisos ---------- */
+.cabecera-cuenta {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+.icono-cabecera {
+  position: relative;
+  min-width: 44px;
+  height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 0 8px;
+  border-radius: 999px;
+  color: var(--ink-soft);
+  text-decoration: none;
+  font-size: 14.5px;
+  font-weight: 600;
+  transition: background-color var(--t-rapida) ease;
+}
+.icono-cabecera svg {
+  width: 21px;
+  height: 21px;
+}
+.icono-cabecera .contador {
+  position: absolute;
+  top: 2px;
+  right: 0;
+}
+@media (hover: hover) and (pointer: fine) {
+  .icono-cabecera:hover {
+    background: var(--surface-2);
+  }
+}
+@media (max-width: 760px) {
+  .cuenta-texto {
+    display: none;
+  }
+}
+
+.estrella-opcion {
+  cursor: pointer;
+  min-width: 44px;
+  min-height: 44px;
+  display: grid;
+  place-items: center;
+  border-radius: 10px;
+}
+.estrella-opcion:has(input:focus-visible) {
+  outline: 2.5px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.desglose-pedido .fila-entre {
+  flex-wrap: nowrap;
+  align-items: baseline;
+}
+.desglose-pedido dd {
+  margin: 0;
+  white-space: nowrap;
+}

@@ -1,0 +1,152 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "zonas": {
+      "type": "object",
+      "properties": {
+        "local": {
+          "type": "object",
+          "properties": {
+            "base": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991,
+              "description": "Monto en centavos de peso (MXN), sin IVA"
+            },
+            "porKg": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991,
+              "description": "Monto en centavos de peso (MXN), sin IVA"
+            },
+            "diasMin": {
+              "type": "integer",
+              "exclusiveMinimum": 0,
+              "maximum": 9007199254740991
+            },
+            "diasMax": {
+              "type": "integer",
+              "exclusiveMinimum": 0,
+              "maximum": 9007199254740991
+            }
+          },
+          "required": [
+            "base",
+            "porKg",
+            "diasMin",
+            "diasMax"
+          ]
+        },
+        "regional": {
+          "type": "object",
+          "properties": {
+            "base": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991,
+              "description": "Monto en centavos de peso (MXN), sin IVA"
+            },
+            "porKg": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991,
+              "description": "Monto en centavos de peso (MXN), sin IVA"
+            },
+            "diasMin": {
+              "type": "integer",
+              "exclusiveMinimum": 0,
+              "maximum": 9007199254740991
+            },
+            "diasMax": {
+              "type": "integer",
+              "exclusiveMinimum": 0,
+              "maximum": 9007199254740991
+            }
+          },
+          "required": [
+            "base",
+            "porKg",
+            "diasMin",
+            "diasMax"
+          ]
+        },
+        "nacional": {
+          "type": "object",
+          "properties": {
+            "base": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991,
+              "description": "Monto en centavos de peso (MXN), sin IVA"
+            },
+            "porKg": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991,
+              "description": "Monto en centavos de peso (MXN), sin IVA"
+            },
+            "diasMin": {
+              "type": "integer",
+              "exclusiveMinimum": 0,
+              "maximum": 9007199254740991
+            },
+            "diasMax": {
+              "type": "integer",
+              "exclusiveMinimum": 0,
+              "maximum": 9007199254740991
+            }
+          },
+          "required": [
+            "base",
+            "porKg",
+            "diasMin",
+            "diasMax"
+          ]
+        }
+      },
+      "required": [
+        "local",
+        "regional",
+        "nacional"
+      ]
+    },
+    "zonaExtendida": {
+      "type": "object",
+      "properties": {
+        "estados": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Z]{2,5}$"
+          }
+        },
+        "recargo": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991,
+          "description": "Monto en centavos de peso (MXN), sin IVA"
+        },
+        "diasExtra": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        }
+      },
+      "required": [
+        "estados",
+        "recargo",
+        "diasExtra"
+      ]
+    },
+    "divisorVolumetrico": {
+      "type": "number",
+      "exclusiveMinimum": 0
+    }
+  },
+  "required": [
+    "zonas",
+    "zonaExtendida",
+    "divisorVolumetrico"
+  ]
+}
