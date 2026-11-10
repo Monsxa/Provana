@@ -1,3 +1,41 @@
+.heroBanda {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+.heroFondo {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+}
+.heroVideo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.9;
+}
+.heroVelo {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(90deg, var(--bg) 0%, var(--bg) 38%, color-mix(in srgb, var(--bg) 40%, transparent) 70%, transparent 100%),
+    linear-gradient(0deg, var(--bg) 0%, transparent 30%);
+}
+@media (max-width: 959px) {
+  .heroVelo {
+    background: linear-gradient(0deg, var(--bg) 0%, color-mix(in srgb, var(--bg) 82%, transparent) 100%);
+  }
+}
+@media (prefers-color-scheme: dark) {
+  :global(:root:not([data-theme="light"])) .heroVideo {
+    filter: invert(1) hue-rotate(180deg);
+    opacity: 0.35;
+  }
+}
+:global(:root[data-theme="dark"]) .heroVideo {
+  filter: invert(1) hue-rotate(180deg);
+  opacity: 0.35;
+}
 .hero {
   display: grid;
   gap: 40px;
@@ -80,9 +118,8 @@
 .muestra {
   margin: 0;
   background: var(--surface);
-  border: 1px solid var(--line);
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-lg);
   padding: 22px;
   display: grid;
   gap: 14px;
@@ -238,7 +275,10 @@
 }
 .proveedor {
   background: var(--surface);
-  border: 1px solid var(--line);
+  box-shadow: var(--shadow-sm);
+  transition:
+    transform var(--t-media) var(--ease-out),
+    box-shadow var(--t-media) var(--ease-out);
   border-radius: var(--radius-lg);
   padding: 22px;
   display: grid;
@@ -338,8 +378,8 @@
 }
 
 .vender {
-  background: var(--ink);
-  color: var(--bg);
+  background: var(--panel);
+  color: var(--panel-ink);
   border-radius: var(--radius-lg);
   padding: 40px 28px;
   display: grid;
@@ -362,7 +402,49 @@
   max-width: 54ch;
 }
 .venderNota {
-  border-left: 1px solid color-mix(in srgb, var(--bg) 30%, transparent);
+  border-left: 1px solid color-mix(in srgb, var(--panel-ink) 30%, transparent);
   padding-left: 16px;
   font-size: 14.5px;
+}
+
+.provNombre {
+  flex: 1;
+  min-width: 0;
+}
+.provEnlace {
+  text-decoration: none;
+}
+.provEnlace::after {
+  /* Toda la tarjeta es clicable sin anidar enlaces. */
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+}
+.proveedor {
+  position: relative;
+}
+.proveedor :global(button) {
+  position: relative;
+  z-index: 1;
+}
+@media (hover: hover) and (pointer: fine) {
+  .proveedor:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow);
+  }
+}
+.provCifras dt {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.provCifras dt svg {
+  width: 14px;
+  height: 14px;
+}
+.pasos {
+  border: 0;
+  box-shadow: var(--shadow-sm);
+  background: var(--line);
 }

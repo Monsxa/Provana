@@ -284,8 +284,8 @@
 }
 
 .resumen {
-  background: var(--ink);
-  color: var(--bg);
+  background: var(--panel);
+  color: var(--panel-ink);
   border-radius: var(--radius-lg);
   padding: 24px;
   display: grid;
@@ -325,11 +325,11 @@
   margin-top: 6px;
   padding: 12px 14px;
   border-radius: var(--radius-md);
-  background: color-mix(in srgb, var(--accent) 34%, var(--ink));
+  background: color-mix(in srgb, var(--verde-600) 45%, var(--panel));
   font-size: 15px;
 }
 .ahorro strong {
-  color: #8fe0bb;
+  color: var(--ambar-400);
   font-size: 17px;
 }
 .ahorroNeutro {
@@ -346,8 +346,8 @@
 }
 .soltar {
   justify-self: start;
-  color: var(--bg);
-  border-color: color-mix(in srgb, var(--bg) 40%, transparent);
+  color: var(--panel-ink);
+  border-color: color-mix(in srgb, var(--panel-ink) 40%, transparent);
 }
 
 .avisoError {
@@ -499,4 +499,134 @@
 .notaFinal {
   font-size: 13.5px;
   color: var(--ink-faint);
+}
+
+/* ---------- Pulido visual y movimiento ---------- */
+.anuncio:not([data-visible]) {
+  display: none;
+}
+.anuncio {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--accent);
+  background: var(--accent-tint);
+  border-radius: var(--radius-sm);
+  padding: 8px 12px;
+}
+.formulario {
+  border: 0;
+  box-shadow: var(--shadow);
+}
+.grupo {
+  border: 0;
+  box-shadow: var(--shadow-sm);
+  animation: entrar var(--t-lenta) var(--ease-out) calc(var(--i, 0) * 50ms) both;
+}
+.enlaceProveedor {
+  text-decoration: none;
+}
+@media (hover: hover) and (pointer: fine) {
+  .enlaceProveedor:hover {
+    text-decoration: underline;
+  }
+}
+.grupoCabecera .sellos {
+  margin-top: 8px;
+}
+.vacio {
+  border-style: solid;
+  border-width: 1px;
+  border-color: var(--line);
+  background: var(--surface);
+  justify-items: start;
+  padding: 32px;
+}
+.vacioIcono {
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  display: grid;
+  place-items: center;
+  background: var(--accent-tint);
+  color: var(--accent);
+}
+.vacioIcono svg {
+  width: 24px;
+  height: 24px;
+}
+.esqueletos {
+  display: grid;
+  gap: 18px;
+}
+.esqueletos .grupo {
+  animation: none;
+}
+
+.comparacion {
+  margin-top: 8px;
+  padding: 16px;
+  border-radius: var(--radius-md);
+  background: color-mix(in srgb, var(--verde-600) 28%, var(--panel));
+  display: grid;
+  gap: 12px;
+}
+.ahorroTitulo {
+  font-size: 16px;
+}
+.ahorroMonto {
+  color: var(--ambar-400);
+  font-size: 22px;
+  font-family: var(--font-mono);
+  font-weight: 600;
+}
+.ahorroPct {
+  color: var(--panel-soft);
+}
+.barras {
+  margin: 0;
+  display: grid;
+  gap: 10px;
+  font-size: 13.5px;
+}
+.barras dt {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--panel-soft);
+  margin-bottom: 4px;
+}
+.barras dd {
+  margin: 0;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 12px;
+}
+.barraFondo {
+  height: 10px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--panel-ink) 10%, transparent);
+  overflow: hidden;
+}
+.barraRef,
+.barraProvana {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  transform-origin: left;
+  transition: transform 450ms var(--ease-out);
+}
+.barraRef {
+  background: color-mix(in srgb, var(--panel-ink) 45%, transparent);
+}
+.barraProvana {
+  background: var(--ambar-400);
+}
+.iconoMini {
+  width: 15px;
+  height: 15px;
+}
+.quitar {
+  border: 0;
+  background: var(--surface-2);
 }

@@ -33,13 +33,14 @@ test.describe("Surtido inteligente", () => {
     await expect(resultados.getByText("Negocio mexicano").first()).toBeVisible();
 
     // Cambiar el café a Finca Los Cerros recalcula el total.
-    const totalAntes = await resultados.locator("p.num").first().textContent();
+    const total = resultados.locator('[data-prueba="total"] .sr-only');
+    const totalAntes = await total.textContent();
     const selector = resultados.getByLabel("Comprar con otro proveedor").first();
     const opcion = await selector.locator("option", { hasText: "Finca Los Cerros" }).getAttribute("value");
     await selector.selectOption(opcion!);
     await expect(resultados).toContainText("Finca Los Cerros");
     await expect(resultados.getByRole("button", { name: "Volver a la recomendación" })).toBeVisible();
-    await expect(resultados.locator("p.num").first()).not.toHaveText(totalAntes!);
+    await expect(total).not.toHaveText(totalAntes!);
   });
 
   test("el ejemplo muestra el ahorro frente a la referencia", async ({ page }) => {
@@ -47,7 +48,7 @@ test.describe("Surtido inteligente", () => {
     await page.getByRole("button", { name: "Probar con un ejemplo" }).click();
     const resultados = page.getByRole("region", { name: "Resultado del surtido" });
     await expect(resultados).toContainText("Ahorras");
-    await expect(resultados).toContainText("frente a");
+    await expect(resultados).toContainText("La combinación de Provana");
   });
 
   test("avisa cuando un producto no tiene proveedor que envíe al estado", async ({ request }) => {

@@ -18,7 +18,7 @@ import {
   TarifasSchema,
   TipoProductoSchema,
 } from "./esquemas";
-import { calcularConfianza } from "./surtido/confianza";
+import { calcularConfianza, componentesConfianza } from "./surtido/confianza";
 import { validarEscalones } from "./surtido/precios";
 import type { Catalogo } from "./surtido/tipos";
 
@@ -39,6 +39,33 @@ export const promedioPlataforma = (() => {
 export const confianzaPorProveedor = new Map(
   proveedores.map((p) => [p.id, calcularConfianza(p.estadisticas, promedioPlataforma)]),
 );
+
+export interface DesgloseConfianza {
+  total: number;
+  factores: { clave: "calificacion" | "cumplimiento" | "disputas" | "respuesta"; nombre: string; puntos: number; maximo: number; detalle: string }[];
+}
+
+/** Puntos que aporta cada factor a la confianza (suman el total, ±1 por redondeo). */
+export function desgloseConfianza(id: string): DesgloseConfianza | null {
+  const p = proveedores.find((x) => x.id === id);
+  if (!p) return null;
+  const e = p.estadisticas;
+  const c = componentesConfianza(e, promedioPlataforma);
+  const pct = e.pedidosCerrados ? Math.round((e.pedidosCompletados / e.pedidosCerrados) * 100) : null;
+  return {
+    total: confianzaPorProveedor.get(id)!,
+    factores: [
+      { clave: "calificacion", nombre: "Calificación", puntos: Math.round(50 * c.Q), maximo: 50,
+        detalle: e.numResenas ? `${(e.sumaEstrellas / e.numResenas).toFixed(1)} ★ en ${e.numResenas} reseñas` : "Sin reseñas todavía" },
+      { clave: "cumplimiento", nombre: "Pedidos completados", puntos: Math.round(30 * c.K), maximo: 30,
+        detalle: pct === null ? "Sin pedidos todavía" : `${pct} % de ${e.pedidosCerrados.toLocaleString("es-MX")} pedidos` },
+      { clave: "disputas", nombre: "Disputas", puntos: Math.round(10 * c.D), maximo: 10,
+        detalle: e.disputasPerdidas === 0 ? "Ninguna perdida" : `${e.disputasPerdidas} perdidas` },
+      { clave: "respuesta", nombre: "Tiempo de respuesta", puntos: Math.round(10 * c.R), maximo: 10,
+        detalle: e.horasRespuesta === null ? "Sin datos" : `Responde en ~${e.horasRespuesta} h` },
+    ],
+  };
+}
 
 /** Revisa referencias cruzadas que el esquema por sí solo no puede revisar. */
 export function erroresDeIntegridad(): string[] {

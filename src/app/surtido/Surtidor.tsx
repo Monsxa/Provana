@@ -1,7 +1,11 @@
 "use client";
 
 import { useCallback, useEffect, useId, useMemo, useRef, useState } from "react";
-import { Alerta, Bandera, Camion, Escudo, Mas, Quitar } from "@/components/Iconos";
+import { ListChecks, Plus, Scale, Truck, TriangleAlert, X } from "lucide-react";
+import { AnilloConfianza } from "@/components/AnilloConfianza";
+import { SelloMexicano, SelloVerificado, TRAZO } from "@/components/Iconos";
+import { Cifra } from "@/components/movimiento/Cifra";
+import type { DesgloseConfianza } from "@/lib/catalogo";
 import { pesos, unidades } from "@/lib/surtido/formato";
 import type { GrupoProveedor, Prioridad, ResultadoSurtido } from "@/lib/surtido/tipos";
 import s from "./surtido.module.css";
@@ -10,6 +14,7 @@ export interface OpcionesSurtidor {
   estados: { clave: string; nombre: string }[];
   grupos: { categoria: string; tipos: { id: string; nombre: string; unidad: string }[] }[];
   variantes: Record<string, Record<string, string[]>>;
+  confianza: Record<string, DesgloseConfianza>;
 }
 
 interface Fila {
@@ -160,6 +165,36 @@ export function Surtidor({ opciones }: { opciones: OpcionesSurtidor }) {
 
   const hayFijos = filas.some((f) => f.proveedorFijo);
 
+  // Agregar un tipo desde la búsqueda (⌘K) o desde un enlace /surtido?agregar=tipo.
+  const [anuncio, setAnuncio] = useState("");
+  const agregarTipo = useCallback(
+    (tipoId: string) => {
+      const tipo = tipos.get(tipoId);
+      if (!tipo) return;
+      let clave = 0;
+      setFilas((fs) => {
+        const vacia = fs.find((f) => !f.tipoId && !f.cantidad);
+        if (vacia) {
+          clave = vacia.clave;
+          return fs.map((f) => (f === vacia ? { ...f, tipoId } : f));
+        }
+        const nueva = filaVacia({ tipoId });
+        clave = nueva.clave;
+        return [...fs, nueva];
+      });
+      setAnuncio(`Agregamos ${tipo.nombre} a tu lista. Escribe la cantidad.`);
+      requestAnimationFrame(() => document.getElementById(`cantidad-${clave}`)?.focus());
+    },
+    [tipos],
+  );
+  useEffect(() => {
+    const p = new URLSearchParams(window.location.search).get("agregar");
+    if (p) agregarTipo(p);
+    const oir = (e: Event) => agregarTipo((e as CustomEvent<string>).detail);
+    window.addEventListener("provana:agregar", oir);
+    return () => window.removeEventListener("provana:agregar", oir);
+  }, [agregarTipo]);
+
   return (
     <div className={s.distribucion}>
       <form
@@ -173,6 +208,9 @@ export function Surtidor({ opciones }: { opciones: OpcionesSurtidor }) {
       >
         <p id="ayuda-formulario" className="sr-only">
           Agrega productos con su cantidad, elige tu estado y calcula.
+        </p>
+        <p className={s.anuncio} aria-live="polite" data-visible={anuncio ? "" : undefined}>
+          {anuncio}
         </p>
 
         <fieldset className={s.bloque}>
@@ -267,7 +305,7 @@ export function Surtidor({ opciones }: { opciones: OpcionesSurtidor }) {
                         aria-label={`Quitar producto ${i + 1}`}
                         onClick={() => setFilas((fs) => fs.filter((x) => x.clave !== f.clave))}
                       >
-                        <Quitar />
+                        <X strokeWidth={TRAZO} aria-hidden />
                       </button>
                     )}
                   </div>
@@ -282,7 +320,7 @@ export function Surtidor({ opciones }: { opciones: OpcionesSurtidor }) {
             onClick={() => setFilas((fs) => [...fs, filaVacia()])}
             disabled={filas.length >= 30}
           >
-            <Mas className={s.icono} /> Agregar producto
+            <Plus strokeWidth={TRAZO} className={s.icono} aria-hidden /> Agregar producto
           </button>
         </fieldset>
 
@@ -357,11 +395,12 @@ export function Surtidor({ opciones }: { opciones: OpcionesSurtidor }) {
       >
         {errorServidor && (
           <div className={s.avisoError} role="alert">
-            <Alerta className={s.icono} />
+            <TriangleAlert strokeWidth={TRAZO} className={s.icono} aria-hidden />
             <p>{errorServidor}</p>
           </div>
         )}
-        {!resultado && !errorServidor && <Vacio />}
+        {!resultado && !errorServidor && cargando && <Esqueleto />}
+        {!resultado && !errorServidor && !cargando && <Vacio onEjemplo={cargarEjemplo} />}
         {resultado && (
           <Resultado
             r={resultado}
@@ -371,6 +410,7 @@ export function Surtidor({ opciones }: { opciones: OpcionesSurtidor }) {
             onCambiar={cambiarProveedor}
             onSoltar={soltarFijos}
             cargando={cargando}
+            confianza={opciones.confianza}
           />
         )}
       </section>
@@ -378,19 +418,41 @@ export function Surtidor({ opciones }: { opciones: OpcionesSurtidor }) {
   );
 }
 
-function Vacio() {
+function Vacio({ onEjemplo }: { onEjemplo: () => void }) {
   return (
-    <div className={s.vacio}>
+    <div className={`${s.vacio} greca`}>
+      <span className={s.vacioIcono}>
+        <ListChecks strokeWidth={TRAZO} aria-hidden />
+      </span>
       <h2>Tu surtido aparecerá aquí</h2>
       <p>
-        Verás qué proveedor conviene para cada producto, cuánto pagas con envío e IVA, y cuánto ahorras
-        frente a comprar todo con uno solo.
+        Verás con quién comprar cada producto, el total con envío e IVA, y cuánto ahorras frente a comprarlo
+        todo con un solo proveedor.
       </p>
-      <ul>
-        <li>Solo proveedores verificados que envían a tu estado.</li>
-        <li>Un envío por proveedor: juntar productos con uno puede salir más barato.</li>
-        <li>Cada elección viene con su porqué.</li>
-      </ul>
+      <button type="button" className="btn btn-primary" onClick={onEjemplo}>
+        Ver un ejemplo: velas, bolsas y café
+      </button>
+    </div>
+  );
+}
+
+/** Esqueleto con la forma del resultado: resumen oscuro + dos proveedores. */
+function Esqueleto() {
+  return (
+    <div className={s.esqueletos} aria-hidden>
+      <div className={s.resumen}>
+        <span className="esqueleto" style={{ width: "45%", height: 14, opacity: 0.4 }} />
+        <span className="esqueleto" style={{ width: "60%", height: 44, opacity: 0.4 }} />
+        <span className="esqueleto" style={{ width: "100%", height: 72, opacity: 0.25 }} />
+      </div>
+      {[0, 1].map((i) => (
+        <div key={i} className={s.grupo}>
+          <span className="esqueleto" style={{ width: "40%", height: 22 }} />
+          <span className="esqueleto" style={{ width: "100%", height: 48 }} />
+          <span className="esqueleto" style={{ width: "100%", height: 40 }} />
+        </div>
+      ))}
+      <p className="sr-only">Calculando tu surtido…</p>
     </div>
   );
 }
@@ -403,6 +465,7 @@ function Resultado({
   onCambiar,
   onSoltar,
   cargando,
+  confianza,
 }: {
   r: ResultadoSurtido;
   nombreEstado: (c: string) => string;
@@ -411,6 +474,7 @@ function Resultado({
   onCambiar: (renglon: number, proveedorId: string) => void;
   onSoltar: () => void;
   cargando: boolean;
+  confianza: Record<string, DesgloseConfianza>;
 }) {
   const diasMin = Math.max(0, ...r.grupos.map((g) => g.envio.diasMin));
   const diasMax = Math.max(0, ...r.grupos.map((g) => g.envio.diasMax));
@@ -426,10 +490,12 @@ function Resultado({
   }
 
   return (
-    <div className={s.resultadoAnimado} key={r.estadoDestino + r.config.prioridad}>
+    <div className={s.resultadoAnimado}>
       <div className={s.resumen} aria-live="polite">
         <p className={s.resumenEtiqueta}>Total con envío e IVA a {nombreEstado(r.estadoDestino)}</p>
-        <p className={`num ${s.total}`}>{pesos(r.totales.total)}</p>
+        <p className={`num ${s.total}`} data-prueba="total">
+          <Cifra valor={r.totales.total} formato="pesos" duracion={450} />
+        </p>
         <dl className={s.desglose}>
           <div>
             <dt>Productos</dt>
@@ -446,7 +512,7 @@ function Resultado({
         </dl>
         <Ahorro r={r} />
         <p className={s.meta}>
-          <Camion className={s.icono} />
+          <Truck strokeWidth={TRAZO} className={s.icono} aria-hidden />
           {paquetes === 1 ? "1 proveedor, 1 paquete" : `${paquetes} proveedores, ${paquetes} paquetes`} · llega en{" "}
           {diasMin}–{diasMax} días hábiles
         </p>
@@ -460,14 +526,23 @@ function Resultado({
       <SinProveedor r={r} nombreTipo={nombreTipo} />
 
       <ol className={s.grupos}>
-        {r.grupos.map((g) => (
-          <Grupo key={g.proveedorId} g={g} r={r} nombreEstado={nombreEstado} onCambiar={onCambiar} cargando={cargando} />
+        {r.grupos.map((g, i) => (
+          <Grupo
+            key={g.proveedorId}
+            indice={i}
+            g={g}
+            r={r}
+            nombreEstado={nombreEstado}
+            onCambiar={onCambiar}
+            cargando={cargando}
+            desglose={confianza[g.proveedorId]}
+          />
         ))}
       </ol>
 
       <p className={s.notaFinal}>
-        Envíos simulados con la tabla de tarifas de Provana. El carrito y el pago llegan en el siguiente
-        bloque.
+        Modo demostración: envíos simulados con la tabla de tarifas de Provana. El carrito y el pago llegan en
+        el siguiente bloque.
       </p>
     </div>
   );
@@ -476,34 +551,57 @@ function Resultado({
 function Ahorro({ r }: { r: ResultadoSurtido }) {
   if (!r.referencia || !r.ahorro) return null;
   const ref = r.referencia;
-  const contra =
-    ref.tipo === "un-proveedor"
-      ? `comprar todo con ${ref.proveedores[0]}`
-      : `la combinación con menos proveedores (${ref.proveedores.join(" y ")})`;
-  if (r.ahorro.centavos > 0) {
-    return (
-      <p className={s.ahorro}>
-        Ahorras <strong className="num">{pesos(r.ahorro.centavos)}</strong> ({r.ahorro.porcentaje.toLocaleString("es-MX")} %)
-        frente a {contra}, que costaría <span className="num">{pesos(ref.total)}</span>.
-      </p>
-    );
-  }
-  if (r.ahorro.centavos < 0) {
-    return (
-      <p className={s.ahorroNeutro}>
-        Pagas <span className="num">{pesos(-r.ahorro.centavos)}</span> más que {contra}, a cambio de proveedores con
-        más confianza.
-      </p>
-    );
-  }
-  return <p className={s.ahorroNeutro}>Comprar con {ref.proveedores.join(" y ")} ya es la mejor opción.</p>;
+  const nombreRef =
+    ref.tipo === "un-proveedor" ? `Todo con ${ref.proveedores[0]}` : `Con menos proveedores (${ref.proveedores.join(" y ")})`;
+  const maximo = Math.max(ref.total, r.totales.total);
+  return (
+    <div className={s.comparacion}>
+      {r.ahorro.centavos > 0 ? (
+        <p className={s.ahorroTitulo}>
+          Ahorras{" "}
+          <strong className={s.ahorroMonto}>
+            <Cifra valor={r.ahorro.centavos} formato="pesos" />
+          </strong>{" "}
+          <span className={s.ahorroPct}>({r.ahorro.porcentaje.toLocaleString("es-MX")} %)</span>
+        </p>
+      ) : r.ahorro.centavos < 0 ? (
+        <p className={s.ahorroTitulo}>
+          Pagas <span className="num">{pesos(-r.ahorro.centavos)}</span> más a cambio de más confianza
+        </p>
+      ) : (
+        <p className={s.ahorroTitulo}>Comprar con {ref.proveedores.join(" y ")} ya es la mejor opción</p>
+      )}
+      <dl className={s.barras}>
+        <div>
+          <dt>{nombreRef}</dt>
+          <dd>
+            <span className={s.barraFondo}>
+              <span className={s.barraRef} style={{ transform: `scaleX(${ref.total / maximo})` }} />
+            </span>
+            <span className="num">{pesos(ref.total)}</span>
+          </dd>
+        </div>
+        <div>
+          <dt>
+            <Scale strokeWidth={TRAZO} className={s.iconoMini} aria-hidden /> La combinación de Provana
+          </dt>
+          <dd>
+            <span className={s.barraFondo}>
+              <span className={s.barraProvana} style={{ transform: `scaleX(${r.totales.total / maximo})` }} />
+            </span>
+            <span className="num">{pesos(r.totales.total)}</span>
+          </dd>
+        </div>
+      </dl>
+    </div>
+  );
 }
 
 function SinProveedor({ r, nombreTipo }: { r: ResultadoSurtido; nombreTipo: (id: string) => string }) {
   if (r.sinProveedor.length === 0) return null;
   return (
     <div className={s.avisoError} role="status">
-      <Alerta className={s.icono} />
+      <TriangleAlert strokeWidth={TRAZO} className={s.icono} aria-hidden />
       <div>
         <p>
           <strong>
@@ -528,31 +626,38 @@ function Grupo({
   nombreEstado,
   onCambiar,
   cargando,
+  indice,
+  desglose,
 }: {
   g: GrupoProveedor;
   r: ResultadoSurtido;
   nombreEstado: (c: string) => string;
   onCambiar: (renglon: number, proveedorId: string) => void;
   cargando: boolean;
+  indice: number;
+  desglose?: DesgloseConfianza;
 }) {
   const zona = { local: "Envío local", regional: "Envío regional", nacional: "Envío nacional" }[g.envio.zona];
   return (
-    <li className={s.grupo}>
+    <li className={s.grupo} style={{ "--i": indice } as React.CSSProperties} data-fundido>
       <header className={s.grupoCabecera}>
         <div>
-          <h3>{g.proveedorNombre}</h3>
-          <p className={s.grupoMeta}>
-            Desde {nombreEstado(g.estadoOrigen)} · confianza <span className="num">{g.confianza}</span>/100
-          </p>
+          <h3>
+            <a href={`/proveedores/${g.proveedorId}`} className={s.enlaceProveedor}>
+              {g.proveedorNombre}
+            </a>
+          </h3>
+          <p className={s.grupoMeta}>Envía desde {nombreEstado(g.estadoOrigen)}</p>
+          <div className={s.sellos}>
+            <SelloVerificado />
+            <SelloMexicano />
+          </div>
         </div>
-        <div className={s.sellos}>
-          <span className="sello sello-verificado">
-            <Escudo /> Verificado
-          </span>
-          <span className="sello sello-mx">
-            <Bandera /> Negocio mexicano
-          </span>
-        </div>
+        {desglose ? (
+          <AnilloConfianza desglose={desglose} />
+        ) : (
+          <p className={s.grupoMeta}>Confianza {g.confianza}/100</p>
+        )}
       </header>
 
       <ul className={s.lineas}>
@@ -580,7 +685,7 @@ function Grupo({
               {exp && <p className={s.porque}>{exp.texto}</p>}
               {exp?.avisos.map((a) => (
                 <p key={a} className={s.avisoLinea}>
-                  <Alerta className={s.icono} />
+                  <TriangleAlert strokeWidth={TRAZO} className={s.icono} aria-hidden />
                   {a}
                 </p>
               ))}

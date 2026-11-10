@@ -1,0 +1,227 @@
+.pagina {
+  padding-top: var(--e-5);
+  display: grid;
+  gap: var(--e-6);
+}
+.volver {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 44px;
+  justify-self: start;
+  color: var(--ink-soft);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 14.5px;
+}
+.volver svg {
+  width: 18px;
+  height: 18px;
+}
+.cabecera {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--e-5);
+  align-items: center;
+}
+.avatar {
+  width: 88px;
+  height: 88px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  flex: none;
+  background: var(--accent-tint-2);
+  color: var(--accent-strong);
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 32px;
+}
+.titulo {
+  display: grid;
+  gap: var(--e-2);
+}
+.titulo h1 {
+  font-size: clamp(32px, 5vw, 48px);
+}
+.lugar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--ink-soft);
+}
+.lugar svg {
+  width: 17px;
+  height: 17px;
+}
+.sellos {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.descripcion {
+  font-size: 18px;
+  color: var(--ink-soft);
+  max-width: 60ch;
+  margin-top: calc(var(--e-4) * -1);
+}
+.rejilla {
+  display: grid;
+  gap: var(--e-4);
+}
+@media (min-width: 900px) {
+  .rejilla {
+    grid-template-columns: 1.1fr 0.9fr;
+  }
+}
+.tarjeta {
+  background: var(--surface);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  padding: var(--e-5);
+  display: grid;
+  gap: var(--e-4);
+  align-content: start;
+}
+.tarjeta h2,
+.seccion h2 {
+  font-size: 22px;
+}
+.cifras {
+  margin: 0;
+  display: grid;
+  gap: var(--e-3);
+}
+.cifras div {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--e-3);
+  padding-bottom: var(--e-3);
+  border-bottom: 1px solid var(--line);
+}
+.cifras div:last-child {
+  border-bottom: 0;
+  padding-bottom: 0;
+}
+.cifras dt {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--ink-soft);
+  font-size: 14.5px;
+}
+.cifras dt svg {
+  width: 17px;
+  height: 17px;
+  color: var(--accent);
+}
+.cifras dd {
+  margin: 0;
+  font-weight: 600;
+  text-align: right;
+}
+.cifras small {
+  font-weight: 400;
+  color: var(--ink-soft);
+}
+.seccion {
+  display: grid;
+  gap: var(--e-4);
+}
+.video {
+  position: relative;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  aspect-ratio: 16 / 9;
+  background: var(--verde-800);
+  max-width: 880px;
+}
+.videoEl {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.videoNota {
+  position: absolute;
+  left: var(--e-4);
+  right: var(--e-4);
+  bottom: var(--e-4);
+  padding: 10px 14px;
+  border-radius: var(--radius-sm);
+  background: color-mix(in srgb, var(--verde-950) 80%, transparent);
+  color: var(--verde-50);
+  font-size: 14px;
+}
+.productos {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--e-4);
+}
+@media (min-width: 760px) {
+  .productos {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+.producto {
+  background: var(--surface);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  padding: var(--e-5);
+  display: grid;
+  gap: var(--e-3);
+  align-content: start;
+}
+.prodCabecera {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--e-3);
+  align-items: baseline;
+}
+.prodCabecera h3 {
+  font-size: 18px;
+}
+.precio {
+  font-weight: 600;
+  font-size: 18px;
+  white-space: nowrap;
+}
+.precio small {
+  font-size: 12.5px;
+  font-weight: 400;
+  color: var(--ink-soft);
+}
+.escalones {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+.escalones th,
+.escalones td {
+  padding: 8px 0;
+  border-top: 1px solid var(--line);
+  text-align: left;
+  font-weight: 400;
+  color: var(--ink-soft);
+}
+.escalones td {
+  text-align: right;
+  color: var(--ink);
+  font-weight: 600;
+}
+.prodPie {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--e-3);
+  font-size: 13.5px;
+  color: var(--ink-soft);
+}
+.iconoBtn {
+  width: 16px;
+  height: 16px;
+}

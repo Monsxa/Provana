@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { categorias, estados, productos, tiposProducto, variantesPorTipo } from "@/lib/catalogo";
+import { categorias, desgloseConfianza, estados, productos, proveedores, tiposProducto, variantesPorTipo } from "@/lib/catalogo";
 import { Surtidor, type OpcionesSurtidor } from "./Surtidor";
 import s from "./surtido.module.css";
 
@@ -22,6 +22,7 @@ export default function PaginaSurtido() {
       }))
       .filter((g) => g.tipos.length > 0),
     variantes: variantesPorTipo(),
+    confianza: Object.fromEntries(proveedores.map((p) => [p.id, desgloseConfianza(p.id)!])),
   };
 
   return (

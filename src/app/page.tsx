@@ -1,14 +1,23 @@
+import { ArrowRight, Clock, PackageCheck, Star, Truck } from "lucide-react";
 import Link from "next/link";
-import { Bandera, Camion, Escudo, Flecha } from "@/components/Iconos";
+import { preload } from "react-dom";
+import { AnilloConfianza } from "@/components/AnilloConfianza";
+import { SelloDemo, SelloMexicano, SelloVerificado, TRAZO } from "@/components/Iconos";
+import { Cifra } from "@/components/movimiento/Cifra";
+import { EnlaceTransicion } from "@/components/movimiento/EnlaceTransicion";
+import { Revelar } from "@/components/movimiento/Revelar";
+import { VideoDiferido } from "@/components/VideoDiferido";
+import { VIDEOS } from "@/config/videos";
 import {
   catalogoParaSurtido,
   confianzaPorProveedor,
+  desgloseConfianza,
   estados,
   productos,
   proveedores,
   tarifas,
 } from "@/lib/catalogo";
-import { pesos } from "@/lib/surtido/formato";
+import { iniciales, pesos } from "@/lib/surtido/formato";
 import { resolverSurtido } from "@/lib/surtido/motor";
 import { CONFIG_INICIAL } from "@/lib/surtido/tipos";
 import h from "./inicio.module.css";
@@ -16,6 +25,8 @@ import h from "./inicio.module.css";
 const nombreEstado = (c: string) => estados.find((e) => e.clave === c)?.nombre ?? c;
 
 export default function Inicio() {
+  // El poster del video de fondo es el elemento más grande en celular (LCP): se pide primero.
+  preload(VIDEOS.portada.poster, { as: "image", fetchPriority: "high" });
   const verificados = proveedores.filter((p) => p.verificacion === "verificado");
   const resenas = verificados.reduce((s, p) => s + p.estadisticas.numResenas, 0);
   const promedio = verificados.reduce((s, p) => s + p.estadisticas.sumaEstrellas, 0) / Math.max(1, resenas);
@@ -39,71 +50,77 @@ export default function Inicio() {
 
   return (
     <>
-      <section className={`wrap ${h.hero}`}>
-        <div className={h.heroTexto}>
-          <h1>Dinos qué necesitas. Te decimos a quién comprárselo.</h1>
-          <p className={h.lead}>
-            Provana compara proveedores mexicanos verificados por precio de mayoreo, pedido mínimo, envío a tu
-            estado y confianza, y arma el surtido que te cuesta menos puesto en tu negocio.
-          </p>
-          <div className={h.ctas}>
-            <Link href="/surtido" className="btn btn-primary">
-              Armar mi surtido <Flecha className={h.flecha} />
-            </Link>
-            <Link href="#como-funciona" className="btn btn-ghost">
-              Ver cómo funciona
-            </Link>
-          </div>
-          <dl className={h.cifras}>
-            <div>
-              <dt>proveedores verificados</dt>
-              <dd className="num">{verificados.length}</dd>
-            </div>
-            <div>
-              <dt>calificación promedio</dt>
-              <dd className="num">{promedio.toFixed(1)} ★</dd>
-            </div>
-            <div>
-              <dt>productos activos</dt>
-              <dd className="num">{activos}</dd>
-            </div>
-            <div>
-              <dt>estados con envío</dt>
-              <dd className="num">{estados.length}</dd>
-            </div>
-          </dl>
-          <p className={h.notaCifras}>Cifras de los datos de ejemplo de esta demostración.</p>
+      <section className={h.heroBanda}>
+        <div className={h.heroFondo} aria-hidden>
+          <VideoDiferido video={VIDEOS.portada} modo="fondo" className={h.heroVideo} />
+          <div className={h.heroVelo} />
         </div>
-
-        <figure className={h.muestra} aria-label="Ejemplo real de un surtido calculado por Provana">
-          <div className={h.muestraCabecera}>
-            <p>40 velas · 500 bolsas kraft · 10 kg de café</p>
-            <p className={h.muestraDestino}>Envío a Jalisco</p>
-          </div>
-          <ul className={h.muestraGrupos}>
-            {ejemplo.grupos.map((g) => (
-              <li key={g.proveedorId}>
-                <div>
-                  <p className={h.muestraProveedor}>{g.proveedorNombre}</p>
-                  <p className={h.muestraLineas}>
-                    {g.lineas.map((l) => l.nombre.split(" — ")[0]).join(" + ")} · desde {nombreEstado(g.estadoOrigen)}
-                  </p>
-                </div>
-                <p className="num">{pesos(g.total)}</p>
-              </li>
-            ))}
-          </ul>
-          <div className={h.muestraTotal}>
-            <p>Total con envío e IVA</p>
-            <p className="num">{pesos(ejemplo.totales.total)}</p>
-          </div>
-          {ejemplo.ahorro && ejemplo.ahorro.centavos > 0 && ejemplo.referencia && (
-            <p className={h.muestraAhorro}>
-              <span className="num">{pesos(ejemplo.ahorro.centavos)}</span> menos que comprar todo con{" "}
-              {ejemplo.referencia.proveedores.join(" y ")}
+        <div className={`wrap ${h.hero}`}>
+          <div className={h.heroTexto}>
+            <h1>Dinos qué necesitas. Te decimos a quién comprárselo.</h1>
+            <p className={h.lead}>
+              Provana compara proveedores mexicanos verificados por precio de mayoreo, pedido mínimo, envío a tu
+              estado y confianza, y arma el surtido que te cuesta menos puesto en tu negocio.
             </p>
-          )}
-        </figure>
+            <div className={h.ctas}>
+              <Link href="/surtido" className="btn btn-primary">
+                Armar mi surtido <ArrowRight strokeWidth={TRAZO} className={h.flecha} aria-hidden />
+              </Link>
+              <Link href="#como-funciona" className="btn btn-ghost">
+                Ver cómo funciona
+              </Link>
+            </div>
+            <dl className={h.cifras}>
+              <div>
+                <dt>proveedores verificados</dt>
+                <dd className="num">{verificados.length}</dd>
+              </div>
+              <div>
+                <dt>calificación promedio</dt>
+                <dd className="num">{promedio.toFixed(1)} ★</dd>
+              </div>
+              <div>
+                <dt>productos activos</dt>
+                <dd className="num">{activos}</dd>
+              </div>
+              <div>
+                <dt>estados con envío</dt>
+                <dd className="num">{estados.length}</dd>
+              </div>
+            </dl>
+            <p className={h.notaCifras}>Cifras de los datos de ejemplo de esta demostración.</p>
+          </div>
+
+          <figure className={h.muestra} aria-label="Ejemplo real de un surtido calculado por Provana">
+            <div className={h.muestraCabecera}>
+              <p>40 velas · 500 bolsas kraft · 10 kg de café</p>
+              <p className={h.muestraDestino}>Envío a Jalisco</p>
+            </div>
+            <ul className={h.muestraGrupos}>
+              {ejemplo.grupos.map((g) => (
+                <li key={g.proveedorId}>
+                  <div>
+                    <p className={h.muestraProveedor}>{g.proveedorNombre}</p>
+                    <p className={h.muestraLineas}>
+                      {g.lineas.map((l) => l.nombre.split(" — ")[0]).join(" + ")} · desde {nombreEstado(g.estadoOrigen)}
+                    </p>
+                  </div>
+                  <p className="num">{pesos(g.total)}</p>
+                </li>
+              ))}
+            </ul>
+            <div className={h.muestraTotal}>
+              <p>Total con envío e IVA</p>
+              <p className="num">{pesos(ejemplo.totales.total)}</p>
+            </div>
+            {ejemplo.ahorro && ejemplo.ahorro.centavos > 0 && ejemplo.referencia && (
+              <p className={h.muestraAhorro}>
+                <span className="num">{pesos(ejemplo.ahorro.centavos)}</span> menos que comprar con{" "}
+                {ejemplo.referencia.proveedores.join(" y ")}
+              </p>
+            )}
+          </figure>
+        </div>
       </section>
 
       <section id="como-funciona" className={`wrap ${h.seccion}`}>
@@ -111,7 +128,7 @@ export default function Inicio() {
           <h2>De tu lista al pedido, sin cotizar uno por uno</h2>
           <p>Cuatro pasos entre saber qué necesitas y tenerlo en tu negocio.</p>
         </div>
-        <ol className={h.pasos}>
+        <Revelar as="ol" className={h.pasos}>
           <li>
             <h3>Escribe tu lista</h3>
             <p>Productos, cantidades y el estado al que te envían. Puedes mezclar categorías.</p>
@@ -128,7 +145,7 @@ export default function Inicio() {
             <h3>Compras con pago protegido</h3>
             <p>El pago queda retenido hasta que confirmas la entrega. En esta demostración es simulado.</p>
           </li>
-        </ol>
+        </Revelar>
       </section>
 
       <section id="proveedores" className={`wrap ${h.seccion}`}>
@@ -139,7 +156,7 @@ export default function Inicio() {
             completados, disputas y tiempo de respuesta.
           </p>
         </div>
-        <ul className={h.proveedores}>
+        <Revelar as="ul" className={h.proveedores}>
           {destacados.map((p) => {
             const e = p.estadisticas;
             const pct = e.pedidosCerrados ? Math.round((e.pedidosCompletados / e.pedidosCerrados) * 100) : 0;
@@ -147,54 +164,55 @@ export default function Inicio() {
             return (
               <li key={p.id} className={h.proveedor}>
                 <div className={h.provCabecera}>
-                  <span className={h.avatar} aria-hidden>
-                    {p.nombre
-                      .split(" ")
-                      .filter((w) => !["de", "del", "la", "las", "los", "y"].includes(w.toLowerCase()))
-                      .slice(0, 2)
-                      .map((w) => w[0])
-                      .join("")}
+                  <span className={h.avatar} aria-hidden style={{ viewTransitionName: `prov-${p.id}` }}>
+                    {iniciales(p.nombre)}
                   </span>
-                  <div>
-                    <h3>{p.nombre}</h3>
+                  <div className={h.provNombre}>
+                    <h3>
+                      <EnlaceTransicion href={`/proveedores/${p.id}`} className={h.provEnlace}>
+                        {p.nombre}
+                      </EnlaceTransicion>
+                    </h3>
                     <p className={h.provMeta}>
-                      {p.ciudad}, {nombreEstado(p.estado)} · en Provana desde {anio}
+                      {p.ciudad}, {nombreEstado(p.estado)} · desde {anio}
                     </p>
                   </div>
+                  <AnilloConfianza desglose={desgloseConfianza(p.id)!} />
                 </div>
                 <div className={h.sellos}>
-                  <span className="sello sello-verificado">
-                    <Escudo /> Verificado
-                  </span>
-                  <span className="sello sello-mx">
-                    <Bandera /> Negocio mexicano
-                  </span>
-                  <span className="sello sello-demo">Datos de ejemplo</span>
+                  <SelloVerificado />
+                  <SelloMexicano />
+                  <SelloDemo />
                 </div>
                 <dl className={h.provCifras}>
                   <div>
-                    <dt>Confianza</dt>
-                    <dd className="num">{confianzaPorProveedor.get(p.id)}/100</dd>
-                  </div>
-                  <div>
-                    <dt>Calificación</dt>
+                    <dt>
+                      <Star strokeWidth={TRAZO} aria-hidden /> Calificación
+                    </dt>
                     <dd className="num">
-                      {(e.sumaEstrellas / Math.max(1, e.numResenas)).toFixed(1)} ★ ({e.numResenas})
+                      <Cifra valor={e.sumaEstrellas / Math.max(1, e.numResenas)} formato="decimal1" desdeCero /> (
+                      {e.numResenas})
                     </dd>
                   </div>
                   <div>
-                    <dt>Completados</dt>
-                    <dd className="num">{pct} %</dd>
+                    <dt>
+                      <PackageCheck strokeWidth={TRAZO} aria-hidden /> Completados
+                    </dt>
+                    <dd className="num">
+                      <Cifra valor={pct} formato="porcentaje" desdeCero />
+                    </dd>
                   </div>
                   <div>
-                    <dt>Responde en</dt>
+                    <dt>
+                      <Clock strokeWidth={TRAZO} aria-hidden /> Responde en
+                    </dt>
                     <dd className="num">~{e.horasRespuesta} h</dd>
                   </div>
                 </dl>
               </li>
             );
           })}
-        </ul>
+        </Revelar>
       </section>
 
       <section id="envios" className={`wrap ${h.seccion}`}>
@@ -205,7 +223,7 @@ export default function Inicio() {
             Precios sin IVA; cada kilo extra suma según la zona.
           </p>
         </div>
-        <div className={h.tablaEnvio}>
+        <div className={h.tablaEnvio} role="region" aria-label="Tarifas de envío por zona" tabIndex={0}>
           <table>
             <thead>
               <tr>
@@ -237,8 +255,9 @@ export default function Inicio() {
             </tbody>
           </table>
           <p className={h.notaTabla}>
-            <Camion className={h.flecha} /> Zona extendida ({tarifas.zonaExtendida.estados.map(nombreEstado).join(", ")}):
-            +{pesos(tarifas.zonaExtendida.recargo)} y {tarifas.zonaExtendida.diasExtra} días más. Envíos simulados.
+            <Truck strokeWidth={TRAZO} className={h.flecha} aria-hidden /> Zona extendida (
+            {tarifas.zonaExtendida.estados.map(nombreEstado).join(", ")}): +{pesos(tarifas.zonaExtendida.recargo)} y{" "}
+            {tarifas.zonaExtendida.diasExtra} días más. Modo demostración: envíos simulados.
           </p>
         </div>
       </section>
