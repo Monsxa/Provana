@@ -9,12 +9,15 @@ import "@fontsource/ibm-plex-mono/400.css";
 import "@fontsource/ibm-plex-mono/500.css";
 import "@fontsource/ibm-plex-mono/600.css";
 import "./globals.css";
+import "./ui.css";
 import { Busqueda, type IndiceBusqueda } from "@/components/Busqueda";
 import { Logo, MarcaGreca } from "@/components/Iconos";
 import { OyenteTransiciones } from "@/components/movimiento/EnlaceTransicion";
 import { NavEnlace } from "@/components/NavEnlace";
 import { BotonBuscar, NavInferior } from "@/components/Navegacion";
 import { RegistrarSW } from "@/components/RegistrarSW";
+import { CabeceraCuenta } from "@/components/tienda/CabeceraCuenta";
+import { Toasts } from "@/components/tienda/Toasts";
 import { categorias, estados, productos, proveedores, tiposProducto } from "@/lib/catalogo";
 
 const urlSitio =
@@ -91,16 +94,17 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
               <span>Provana</span>
             </Link>
             <nav className="nav" aria-label="Principal">
-              <NavEnlace href="/#como-funciona" className="nav-sec">
-                Cómo funciona
+              <NavEnlace href="/catalogo" className="nav-sec">
+                Catálogo
               </NavEnlace>
-              <NavEnlace href="/#proveedores" className="nav-sec">
+              <NavEnlace href="/proveedores" className="nav-sec">
                 Proveedores
               </NavEnlace>
+              <NavEnlace href="/surtido" className="nav-sec">
+                Surtido
+              </NavEnlace>
               <BotonBuscar className="boton-buscar" />
-              <Link href="/surtido" className="btn btn-primary btn-sm nav-cta">
-                Armar mi surtido
-              </Link>
+              <CabeceraCuenta />
             </nav>
           </div>
         </header>
@@ -115,6 +119,13 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
                 mexicanos.
               </p>
             </div>
+            <nav aria-label="Legal" className="pie-legal">
+              <Link href="/legal/terminos">Términos de uso</Link>
+              <Link href="/legal/privacidad">Aviso de privacidad</Link>
+              <Link href="/legal/envios">Política de envíos</Link>
+              <Link href="/legal/devoluciones">Devoluciones</Link>
+              <Link href="/legal/antifraude">Reglas contra fraude</Link>
+            </nav>
             <p>
               Proyecto de curso en modo demostración. Los proveedores, productos, precios y calificaciones son
               datos de ejemplo; los envíos y pagos son simulados.
@@ -124,6 +135,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <NavInferior />
         <Busqueda indice={indiceBusqueda()} />
         <OyenteTransiciones />
+        <Toasts />
         <RegistrarSW />
       </body>
     </html>

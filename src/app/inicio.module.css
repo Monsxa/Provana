@@ -8,12 +8,6 @@
   inset: 0;
   z-index: -1;
 }
-.heroVideo {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  opacity: 0.9;
-}
 .heroVelo {
   position: absolute;
   inset: 0;
@@ -25,16 +19,6 @@
   .heroVelo {
     background: linear-gradient(0deg, var(--bg) 0%, color-mix(in srgb, var(--bg) 82%, transparent) 100%);
   }
-}
-@media (prefers-color-scheme: dark) {
-  :global(:root:not([data-theme="light"])) .heroVideo {
-    filter: invert(1) hue-rotate(180deg);
-    opacity: 0.35;
-  }
-}
-:global(:root[data-theme="dark"]) .heroVideo {
-  filter: invert(1) hue-rotate(180deg);
-  opacity: 0.35;
 }
 .hero {
   display: grid;

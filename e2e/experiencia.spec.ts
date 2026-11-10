@@ -79,31 +79,6 @@ test.describe("Confianza y ficha de proveedor", () => {
   });
 });
 
-test.describe("Video de portada", () => {
-  test("no se descarga hasta que la página cargó y está en pantalla; luego se reproduce", async ({ page }) => {
-    const pedidos: string[] = [];
-    page.on("request", (r) => r.url().includes("/videos/") && pedidos.push(r.url()));
-    await page.goto("/");
-    const video = page.locator("video").first();
-    await expect(video).toHaveAttribute("preload", "none");
-    await expect(video).toHaveAttribute("poster", "/posters/portada.webp");
-    await expect.poll(() => video.evaluate((v: HTMLVideoElement) => !v.paused), { timeout: 8000 }).toBe(true);
-    expect(pedidos.length).toBeGreaterThan(0);
-    // Fuera de pantalla se pausa.
-    await page.locator("#vender").scrollIntoViewIfNeeded();
-    await expect.poll(() => video.evaluate((v: HTMLVideoElement) => v.paused)).toBe(true);
-  });
-
-  test("con ahorro de datos no se descarga", async ({ page }) => {
-    await page.addInitScript(() => Object.defineProperty(navigator, "connection", { value: { saveData: true } }));
-    const pedidos: string[] = [];
-    page.on("request", (r) => r.url().includes("/videos/") && pedidos.push(r.url()));
-    await page.goto("/");
-    await page.waitForTimeout(1500);
-    expect(pedidos).toEqual([]);
-  });
-});
-
 test.describe("Celular", () => {
   test("barra de navegación inferior con áreas de 44 px o más", async ({ page, isMobile }) => {
     test.skip(!isMobile, "Solo en celular");

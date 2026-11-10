@@ -71,15 +71,6 @@ test.describe("Movimiento reducido", () => {
     expect(ocultos).toBe(0);
   });
 
-  test("el video de fondo no se reproduce ni se descarga", async ({ page }) => {
-    const pedidos: string[] = [];
-    page.on("request", (r) => r.url().includes("/videos/") && pedidos.push(r.url()));
-    await page.goto("/");
-    await page.waitForTimeout(1500);
-    expect(pedidos).toEqual([]);
-    expect(await page.locator("video").first().evaluate((v: HTMLVideoElement) => v.paused)).toBe(true);
-  });
-
   test("la búsqueda abre solo con desvanecido (sin escala)", async ({ page }) => {
     await page.goto("/");
     await page.waitForLoadState("networkidle");
@@ -88,5 +79,50 @@ test.describe("Movimiento reducido", () => {
     await expect(panel).toBeVisible();
     const transform = await panel.evaluate((el) => getComputedStyle(el).transform);
     expect(transform === "none" || transform === "matrix(1, 0, 0, 1, 0, 0)").toBe(true);
+  });
+});
+
+test.describe("axe · tienda, paneles y legales", () => {
+  async function entrarDemo(page: Page, boton: string) {
+    await page.goto("/entrar");
+    await page.waitForLoadState("networkidle");
+    await page.getByRole("button", { name: boton }).click();
+    await page.waitForURL((u) => !u.pathname.startsWith("/entrar"));
+  }
+
+  test("comprador: catálogo, producto, carrito, pago, pedidos, cuenta y avisos", async ({ page }) => {
+    await entrarDemo(page, "Entrar como comprador");
+    for (const ruta of ["/catalogo", "/producto/av-vela-lavanda", "/proveedores"]) {
+      await page.goto(ruta);
+      await page.waitForLoadState("networkidle");
+      await sinViolacionesGraves(page, ruta);
+    }
+    await page.goto("/producto/av-vela-lavanda");
+    await page.getByRole("button", { name: "Agregar al carrito" }).click();
+    for (const ruta of ["/carrito", "/checkout", "/pedidos", "/cuenta", "/avisos", "/comparar"]) {
+      await page.goto(ruta);
+      await page.waitForLoadState("networkidle");
+      await sinViolacionesGraves(page, ruta);
+    }
+  });
+
+  test("proveedor: panel y productos", async ({ page }) => {
+    await entrarDemo(page, "Entrar como proveedor");
+    for (const ruta of ["/panel", "/panel/productos", "/panel/pedidos", "/panel/cuenta", "/panel/verificacion"]) {
+      await page.goto(ruta);
+      await page.waitForLoadState("networkidle");
+      await sinViolacionesGraves(page, ruta);
+    }
+  });
+
+  test("administración y páginas legales", async ({ page }) => {
+    await entrarDemo(page, "Entrar como administración");
+    await sinViolacionesGraves(page, "/admin");
+    await page.getByRole("tab", { name: "Ajustes" }).click();
+    await sinViolacionesGraves(page, "/admin ajustes");
+    for (const ruta of ["/legal/terminos", "/legal/privacidad", "/entrar"]) {
+      await page.goto(ruta);
+      await sinViolacionesGraves(page, ruta);
+    }
   });
 });

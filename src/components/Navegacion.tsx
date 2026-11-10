@@ -1,6 +1,6 @@
 "use client";
 /** Botón de búsqueda (cabecera) y barra de navegación inferior para celular. */
-import { House, ListChecks, Search, Store } from "lucide-react";
+import { House, LayoutGrid, ListChecks, Search, ShoppingCart } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -24,7 +24,8 @@ export function NavInferior() {
   const items = [
     { href: "/", nombre: "Inicio", Icono: House, activo: ruta === "/" },
     { href: "/surtido", nombre: "Surtido", Icono: ListChecks, activo: ruta.startsWith("/surtido") },
-    { href: "/#proveedores", nombre: "Proveedores", Icono: Store, activo: ruta.startsWith("/proveedores") },
+    { href: "/catalogo", nombre: "Catálogo", Icono: LayoutGrid, activo: ruta.startsWith("/catalogo") || ruta.startsWith("/producto") },
+    { href: "/carrito", nombre: "Carrito", Icono: ShoppingCart, activo: ruta.startsWith("/carrito") || ruta.startsWith("/checkout") },
   ];
   return (
     <nav className="nav-inferior" aria-label="Navegación inferior">

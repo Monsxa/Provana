@@ -630,3 +630,10 @@
   border: 0;
   background: var(--surface-2);
 }
+
+.agregarTodo {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 16px;
+}

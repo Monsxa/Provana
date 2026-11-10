@@ -6,10 +6,10 @@ import { AnilloConfianza } from "@/components/AnilloConfianza";
 import { SelloDemo, SelloMexicano, SelloVerificado, TRAZO } from "@/components/Iconos";
 import { Cifra } from "@/components/movimiento/Cifra";
 import { Revelar } from "@/components/movimiento/Revelar";
-import { VideoDiferido } from "@/components/VideoDiferido";
-import { VIDEOS, VIDEOS_PROVEEDOR } from "@/config/videos";
 import { desgloseConfianza, estados, productos, proveedores } from "@/lib/catalogo";
 import { iniciales, pesos, unidades } from "@/lib/surtido/formato";
+import { EnVivo } from "./EnVivo";
+import { FichaDemo } from "./FichaDemo";
 import f from "./ficha.module.css";
 
 type Props = { params: Promise<{ id: string }> };
@@ -31,18 +31,26 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function FichaProveedor({ params }: Props) {
-  const p = verificado((await params).id);
-  if (!p) notFound();
+  const { id } = await params;
+  const p = verificado(id);
+  // Proveedores creados en la demostración: la ficha se arma en el navegador con los datos vivos.
+  if (!p) {
+    if (proveedores.some((x) => x.id === id)) notFound(); // de ejemplo pero no verificado (en revisión)
+    return (
+      <div className="wrap pagina">
+        <FichaDemo id={id} />
+      </div>
+    );
+  }
   const e = p.estadisticas;
   const desglose = desgloseConfianza(p.id)!;
   const suyos = productos.filter((x) => x.proveedorId === p.id && x.estado === "activo");
   const pct = e.pedidosCerrados ? Math.round((e.pedidosCompletados / e.pedidosCerrados) * 100) : 0;
-  const video = VIDEOS_PROVEEDOR[p.id] ?? VIDEOS.proveedor;
   const anios = Math.max(0, new Date().getFullYear() - new Date(p.desde).getFullYear());
 
   return (
     <div className={`wrap ${f.pagina}`}>
-      <Link href="/#proveedores" className={f.volver}>
+      <Link href="/proveedores" className={f.volver}>
         <ArrowLeft strokeWidth={TRAZO} aria-hidden /> Proveedores
       </Link>
 
@@ -116,15 +124,7 @@ export default async function FichaProveedor({ params }: Props) {
         </section>
       </div>
 
-      <section className={f.seccion} aria-labelledby="t-video">
-        <h2 id="t-video">El taller</h2>
-        <div className={f.video}>
-          <VideoDiferido video={video} modo="clip" className={f.videoEl} />
-          {!video.mp4 && !video.webm && (
-            <p className={f.videoNota}>Modo demostración: aquí va un clip de 10 a 20 s del taller del proveedor.</p>
-          )}
-        </div>
-      </section>
+      <EnVivo proveedorId={p.id} nombre={p.nombre} />
 
       <section className={f.seccion} aria-labelledby="t-productos">
         <h2 id="t-productos">Productos ({suyos.length})</h2>
@@ -154,9 +154,12 @@ export default async function FichaProveedor({ params }: Props) {
                 <span>
                   Mínimo {unidades(x.pedidoMinimo, x.unidad)} · {x.existencias.toLocaleString("es-MX")} disponibles
                 </span>
-                <Link href={`/surtido?agregar=${x.tipoId}`} className="btn btn-ghost btn-sm">
-                  <Plus strokeWidth={TRAZO} aria-hidden className={f.iconoBtn} /> Agregar al surtido
-                </Link>
+                <span className="fila">
+                  <Link href={`/producto/${x.id}`} className="btn btn-primary btn-sm">Ver producto</Link>
+                  <Link href={`/surtido?agregar=${x.tipoId}`} className="btn btn-ghost btn-sm">
+                    <Plus strokeWidth={TRAZO} aria-hidden className={f.iconoBtn} /> Agregar al surtido
+                  </Link>
+                </span>
               </div>
             </li>
           ))}

@@ -1,13 +1,10 @@
 import { ArrowRight, Clock, PackageCheck, Star, Truck } from "lucide-react";
 import Link from "next/link";
-import { preload } from "react-dom";
 import { AnilloConfianza } from "@/components/AnilloConfianza";
 import { SelloDemo, SelloMexicano, SelloVerificado, TRAZO } from "@/components/Iconos";
 import { Cifra } from "@/components/movimiento/Cifra";
 import { EnlaceTransicion } from "@/components/movimiento/EnlaceTransicion";
 import { Revelar } from "@/components/movimiento/Revelar";
-import { VideoDiferido } from "@/components/VideoDiferido";
-import { VIDEOS } from "@/config/videos";
 import {
   catalogoParaSurtido,
   confianzaPorProveedor,
@@ -25,8 +22,6 @@ import h from "./inicio.module.css";
 const nombreEstado = (c: string) => estados.find((e) => e.clave === c)?.nombre ?? c;
 
 export default function Inicio() {
-  // El poster del video de fondo es el elemento más grande en celular (LCP): se pide primero.
-  preload(VIDEOS.portada.poster, { as: "image", fetchPriority: "high" });
   const verificados = proveedores.filter((p) => p.verificacion === "verificado");
   const resenas = verificados.reduce((s, p) => s + p.estadisticas.numResenas, 0);
   const promedio = verificados.reduce((s, p) => s + p.estadisticas.sumaEstrellas, 0) / Math.max(1, resenas);
@@ -51,8 +46,7 @@ export default function Inicio() {
   return (
     <>
       <section className={h.heroBanda}>
-        <div className={h.heroFondo} aria-hidden>
-          <VideoDiferido video={VIDEOS.portada} modo="fondo" className={h.heroVideo} />
+        <div className={`${h.heroFondo} greca`} aria-hidden>
           <div className={h.heroVelo} />
         </div>
         <div className={`wrap ${h.hero}`}>
@@ -66,8 +60,8 @@ export default function Inicio() {
               <Link href="/surtido" className="btn btn-primary">
                 Armar mi surtido <ArrowRight strokeWidth={TRAZO} className={h.flecha} aria-hidden />
               </Link>
-              <Link href="#como-funciona" className="btn btn-ghost">
-                Ver cómo funciona
+              <Link href="/catalogo" className="btn btn-ghost">
+                Ver catálogo
               </Link>
             </div>
             <dl className={h.cifras}>
@@ -271,7 +265,12 @@ export default function Inicio() {
               cada reseña real suben tu confianza y te ponen primero en el surtido.
             </p>
           </div>
-          <p className={h.venderNota}>El registro y la verificación de proveedores abren en la siguiente etapa.</p>
+          <div className={h.venderNota}>
+            <p>Regístrate, sube tu RFC, identificación, comprobante de domicilio y fotos de tu taller. Al verificarte, tus productos aparecen en el catálogo.</p>
+            <Link href="/entrar?modo=crear&rol=proveedor" className="btn btn-amber" style={{ marginTop: 16 }}>
+              Quiero vender en Provana
+            </Link>
+          </div>
         </div>
       </section>
     </>

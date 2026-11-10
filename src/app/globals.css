@@ -593,8 +593,7 @@ textarea {
   display: none;
 }
 @media (max-width: 760px) {
-  .boton-buscar,
-  .nav-cta {
+  .boton-buscar {
     display: none;
   }
   body {
@@ -607,7 +606,7 @@ textarea {
     right: 0;
     bottom: 0;
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(5, 1fr);
     padding: 6px 8px calc(6px + env(safe-area-inset-bottom));
     background: color-mix(in srgb, var(--surface) 94%, transparent);
     backdrop-filter: saturate(1.4) blur(12px);
@@ -641,4 +640,16 @@ textarea {
   .nav-inferior [aria-current="page"] {
     color: var(--accent);
   }
+}
+
+.pie-legal {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 16px;
+}
+.pie-legal a {
+  color: var(--ink-soft);
+  min-height: 32px;
+  display: inline-flex;
+  align-items: center;
 }

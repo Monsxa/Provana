@@ -6,6 +6,10 @@ import { AnilloConfianza } from "@/components/AnilloConfianza";
 import { SelloMexicano, SelloVerificado, TRAZO } from "@/components/Iconos";
 import { Cifra } from "@/components/movimiento/Cifra";
 import type { DesgloseConfianza } from "@/lib/catalogo";
+import { mostrarAviso } from "@/components/tienda/Toasts";
+import { resolverSurtido } from "@/lib/surtido/motor";
+import { CONFIG_INICIAL } from "@/lib/surtido/tipos";
+import { agregarVarias, catalogoSurtido, desglose, useTienda } from "@/lib/tienda/almacen";
 import { pesos, unidades } from "@/lib/surtido/formato";
 import type { GrupoProveedor, Prioridad, ResultadoSurtido } from "@/lib/surtido/tipos";
 import s from "./surtido.module.css";
@@ -51,6 +55,9 @@ const filaVacia = (parcial: Partial<Fila> = {}): Fila => ({
 });
 
 export function Surtidor({ opciones }: { opciones: OpcionesSurtidor }) {
+  const st = useTienda();
+  const tienda = useRef(st);
+  tienda.current = st;
   const [estado, setEstado] = useState("");
   const [prioridad, setPrioridad] = useState<Prioridad>("equilibrado");
   const [permitirExtra, setPermitirExtra] = useState(false);
@@ -93,33 +100,29 @@ export function Surtidor({ opciones }: { opciones: OpcionesSurtidor }) {
       setCargando(true);
       setErrorServidor(null);
       try {
-        const res = await fetch("/api/surtido", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            estadoDestino: est,
-            prioridad: prio,
-            permitirExtra: extra,
-            renglones: completas.map((f) => ({
-              tipoId: f.tipoId,
-              cantidad: Number(f.cantidad),
-              variante: Object.keys(f.variante).length ? f.variante : null,
-              proveedorFijo: f.proveedorFijo,
-            })),
-          }),
-        });
-        const datos = await res.json();
-        if (!res.ok) {
-          setErrorServidor(datos.error ?? "No pudimos calcular tu surtido.");
-          return;
-        }
-        setResultado(datos as ResultadoSurtido);
+        // El motor corre en el navegador con lo que hay hoy en la tienda (incluye productos nuevos
+        // y los ajustes de administración). La API POST /api/surtido sigue disponible con el catálogo base.
+        const st = tienda.current;
+        if (!st) throw new Error("La tienda todavía está cargando.");
+        await new Promise((r) => setTimeout(r, 120)); // deja pintar el esqueleto en cálculos rápidos
+        const datos = resolverSurtido(
+          completas.map((f) => ({
+            tipoId: f.tipoId,
+            cantidad: Number(f.cantidad),
+            variante: Object.keys(f.variante).length ? f.variante : null,
+            proveedorFijo: f.proveedorFijo,
+          })),
+          est,
+          catalogoSurtido(st),
+          { ...CONFIG_INICIAL, prioridad: prio, permitirExtra: extra, confianzaMinima: st.ajustes.confianzaMinima, pesosRiesgo: st.ajustes.pesosRiesgo },
+        );
+        setResultado(datos);
         setFilasCalculadas(completas);
         if (desplazar && window.matchMedia("(max-width: 960px)").matches) {
           requestAnimationFrame(() => resultadosRef.current?.scrollIntoView({ behavior: "smooth", block: "start" }));
         }
-      } catch {
-        setErrorServidor("No hay conexión con Provana. Revisa tu internet e inténtalo de nuevo.");
+      } catch (err) {
+        setErrorServidor(err instanceof Error ? err.message : "No pudimos calcular tu surtido.");
       } finally {
         setCargando(false);
       }
@@ -410,7 +413,7 @@ export function Surtidor({ opciones }: { opciones: OpcionesSurtidor }) {
             onCambiar={cambiarProveedor}
             onSoltar={soltarFijos}
             cargando={cargando}
-            confianza={opciones.confianza}
+            confianza={st ? Object.fromEntries(resultado.grupos.map((g) => [g.proveedorId, desglose(st, g.proveedorId)])) : opciones.confianza}
           />
         )}
       </section>
@@ -525,6 +528,24 @@ function Resultado({
 
       <SinProveedor r={r} nombreTipo={nombreTipo} />
 
+      <div className={s.agregarTodo}>
+        <button
+          type="button"
+          className="btn btn-primary"
+          disabled={cargando}
+          onClick={() => {
+            const lineas = r.grupos.flatMap((g) => g.lineas.map((l) => ({ productoId: l.productoId, cantidad: l.cantidad })));
+            const res = agregarVarias(lineas);
+            const piezas = r.grupos.flatMap((g) => g.lineas).reduce((a, l) => a + l.cantidad, 0);
+            if (res.agregadas === lineas.length) mostrarAviso(`Agregamos ${res.agregadas} productos (${piezas.toLocaleString("es-MX")} piezas en total) de ${r.grupos.length} proveedores a tu carrito.`, { href: "/carrito", texto: "Ver carrito" });
+            else mostrarAviso(`Agregamos ${res.agregadas} de ${lineas.length}. ${res.omitidas[0] ?? ""}`, { href: "/carrito", texto: "Ver carrito" });
+          }}
+        >
+          Agregar todo al carrito
+        </button>
+        <span className="chico suave">Se crea un pedido por proveedor.</span>
+      </div>
+
       <ol className={s.grupos}>
         {r.grupos.map((g, i) => (
           <Grupo
@@ -541,8 +562,7 @@ function Resultado({
       </ol>
 
       <p className={s.notaFinal}>
-        Modo demostración: envíos simulados con la tabla de tarifas de Provana. El carrito y el pago llegan en
-        el siguiente bloque.
+        Modo demostración: envíos simulados con la tabla de tarifas de Provana.
       </p>
     </div>
   );
