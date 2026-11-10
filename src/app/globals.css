@@ -263,6 +263,11 @@ textarea {
   top: 12px;
 }
 
+/* El contenido ocupa al menos una pantalla: el pie no salta mientras cargan las páginas de la tienda (CLS). */
+main#contenido {
+  min-height: 100svh;
+}
+
 /* ---------- Botones ---------- */
 .btn {
   display: inline-flex;

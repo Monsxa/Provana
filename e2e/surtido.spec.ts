@@ -51,6 +51,21 @@ test.describe("Surtido inteligente", () => {
     await expect(resultados).toContainText("La combinación de Provana");
   });
 
+  test("Criterio 12: agregar todo al carrito deja los mismos productos y cantidades", async ({ page }) => {
+    await page.goto("/surtido");
+    await page.waitForLoadState("networkidle");
+    await page.getByRole("button", { name: "Probar con un ejemplo" }).click();
+    const resultados = page.getByRole("region", { name: "Resultado del surtido" });
+    await expect(resultados).toContainText("Ahorras");
+    await resultados.getByRole("button", { name: "Agregar todo al carrito" }).click();
+    await expect(page.getByText(/Agregamos 3 productos \(550 piezas en total\) de 3 proveedores/)).toBeVisible();
+    await page.goto("/carrito");
+    for (const prov of ["Cerería San Miguel", "Empaques Sureste", "Café Rápido"]) await expect(page.getByRole("heading", { name: prov })).toBeVisible();
+    await expect(page.getByLabel(/Cantidad de Vela de soya en vaso/)).toHaveValue("40");
+    await expect(page.getByLabel(/Cantidad de Bolsa kraft mediana/)).toHaveValue("500");
+    await expect(page.getByLabel(/Cantidad de Café tostado/)).toHaveValue("10");
+  });
+
   test("avisa cuando un producto no tiene proveedor que envíe al estado", async ({ request }) => {
     const res = await request.post("/api/surtido", {
       data: { estadoDestino: "YUC", renglones: [{ tipoId: "tote-manta", cantidad: 10, variante: { color: "rojo" } }] },

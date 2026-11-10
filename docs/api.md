@@ -67,3 +67,26 @@ Todos los montos van en **centavos** (enteros).
 ```bash
 curl -s -X POST http://localhost:3000/api/surtido -H 'content-type: application/json' -d '{"estadoDestino":"JAL","renglones":[{"tipoId":"cafe-altura-1kg","cantidad":10}]}'
 ```
+
+---
+
+## Capa de datos de la tienda (modo demostración)
+
+La tienda no usa endpoints HTTP: las pantallas llaman funciones de `src/lib/tienda/almacen.ts`, que guardan en el navegador y revisan permisos. Al conectar Supabase, cada función se vuelve una ruta o una consulta con RLS, con la misma firma.
+
+| Función | Quién | Entrada | Efecto / salida |
+|---|---|---|---|
+| `registrar` | cualquiera | nombre, email, clave, rol, negocio? | Crea usuario (y proveedor en revisión); aviso para confirmar correo |
+| `entrar` / `salir` | cualquiera | email, clave | Sesión; une el carrito anónimo |
+| `pedirRecuperacion` / `restablecerClave` | cualquiera | email, código, nueva clave | Código de 6 dígitos en avisos |
+| `agregarAlCarrito` / `cambiarCantidad` / `quitarDelCarrito` | cualquiera | productoId, cantidad | Valida disponibilidad y existencias; devuelve el texto del aviso |
+| `comprar` | comprador | dirección, envíos, cupones, método, tarjeta?, factura | Un pedido por proveedor, pago retenido o pendiente, reserva inventario |
+| `simularPagoRecibido` | comprador | grupoCompra | Acredita OXXO/SPEI (demo) |
+| `accionPedido` | según actor | pedidoId, acción, nota | preparar, enviar (genera guía), marcar_entregado, confirmar_entrega, cancelar, abrir_disputa |
+| `resolverDisputa` | admin | disputaId, resolución, monto | Libera, reembolsa total o parcial |
+| `resenar` / `responderResena` / `reportarResena` / `moderarResena` | comprador / proveedor / cualquiera / admin | — | Reglas de reseñas |
+| `enviarMensaje` | comprador o proveedor del hilo | hilo, texto | Chat + aviso |
+| `solicitarCotizacion` / `responderCotizacion` | comprador / proveedor | — | Cotizaciones y muestras |
+| `guardarProducto` / `cambiarEstadoProducto` / `importarCsv` | proveedor dueño | datos del producto / CSV | Valida escalones y permisos sanitarios; avisa bajadas de precio |
+| `subirDocumento` / `subirFactura` / `guardarCupon` / `guardarTienda` | proveedor | — | Verificación, CFDI, cupones, datos de la tienda |
+| `verificarProveedor` / `guardarAjustes` / `adelantarReloj` | admin | — | Verificación, comisión y reglas, reloj simulado |

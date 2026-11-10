@@ -358,6 +358,5 @@ describe("Cambiar el proveedor de un renglón", () => {
   });
 });
 
-describe("Criterio 12 · agregar al carrito", () => {
-  it.todo("se prueba en el bloque de carrito (siguiente bloque)");
-});
+// Criterio 12 · "Agregar todo al carrito": se prueba en el navegador (e2e/surtido.spec.ts),
+// porque usa la capa de datos de la tienda.

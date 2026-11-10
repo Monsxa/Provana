@@ -21,9 +21,9 @@ export function TarjetaProducto({ p, s, indice = 0 }: { p: ProductoTienda; s: Es
     <li className="producto-tarjeta" style={{ "--i": indice } as React.CSSProperties}>
       <Ilustracion tipoId={p.tipoId} fotos={p.fotos} nombre={p.nombre} />
       <div className="producto-tarjeta-cuerpo">
-        <h3>
+        <h2 className="producto-tarjeta-titulo">
           <Link href={`/producto/${p.id}`}>{p.nombre}</Link>
-        </h3>
+        </h2>
         <p className="chico suave">
           {prov.nombre} · confianza <span className="num">{confianza(s, prov.id)}</span>
         </p>

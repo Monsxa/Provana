@@ -56,3 +56,22 @@ Bitácora del pulido visual pedido el 2026-11-09. Las decisiones de negocio sigu
 - **Fallas que resultaron ser de la prueba:** el atajo Ctrl+K se presionaba antes de que la página terminara de cargar. Se espera a `networkidle`.
 - **Lighthouse (celular):** Surtido 99, ficha de proveedor 95, portada **89**. Accesibilidad, buenas prácticas y SEO dieron 100 en las tres. El LCP de la portada era el poster del video de fondo (el navegador lo descubre tarde); se agregó una precarga con prioridad alta. **La nueva medición no se completó:** se detuvo dos veces y no hay número confirmado. Está pendiente volver a medir.
 - **Contraste:** 35 pruebas automáticas en verde.
+
+## 7. Se retiran los videos
+
+**Decisión de Monse.** *"ya no le pongas videos"*.
+
+**Qué se hizo.** Se borraron `public/videos`, los posters, `src/config/videos.ts`, `VideoDiferido.tsx`, sus pruebas y la sección "El taller" de la ficha de proveedor. La portada conserva el patrón de greca como fondo **estático**.
+
+**Verificado.** Lighthouse de la portada pasó de 89 (con video) a **97**. Ninguna prueba hace referencia a videos.
+
+## 8. Pantallas de la tienda con la misma familia visual
+
+- Un solo archivo de piezas (`src/app/ui.css`): tarjetas con sombra en lugar de borde, campos de 44 px, pestañas, estados, línea de tiempo, avisos flotantes y barra del comparador.
+- **Movimiento:**
+  - La línea de tiempo del pedido se dibuja (`scaleY`) y la palomita se traza sola (`stroke-dashoffset`), sin confeti.
+  - Los avisos flotantes entran en 250 ms y salen en 150 ms.
+  - La barra hacia el siguiente escalón se llena con `scaleX` y el subtotal cuenta hacia su valor.
+  - La gráfica de 6 meses crece con un desfase de 50 ms por barra.
+- **Sin fotos falsas:** los productos sin foto muestran un ícono de su categoría sobre la greca, con texto alternativo "sin foto todavía".
+- **Textos específicos:** "Agregamos 24 piezas de Vela de soya — rosa a tu carrito", "Generamos la guía de PV-10001 (simulada)".

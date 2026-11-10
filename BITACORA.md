@@ -119,3 +119,37 @@ Marcas: **[SANDBOX]** = modo de pruebas, sin dinero ni envíos reales · **[REAL
 - En México muchos alimentos tienen IVA de 0 %. Por ahora el IVA se define por proveedor, como pediste; se puede refinar por producto.
 
 **Modo.** Todo **[SIMULADO]**: envíos con tabla de tarifas, sin pagos. Datos de ejemplo.
+
+---
+
+## 2026-11-10 · Entrada 4 · La app completa en modo demostración
+
+**Qué decidió Monse (sus palabras).** *"terminala y sube la actualizacion a gitguf pero ya no le pongas videos"* y después *"termina todo"*.
+
+**Qué decidió Claude, y por qué (marcado como decisión propia).** El proyecto de Supabase se pidió tres veces y no llegó. Para no detener el trabajo, todas las funciones se construyeron sobre una **capa de datos en el navegador** (`src/lib/tienda/almacen.ts`) con nombres de negocio (`registrar`, `comprar`, `accionPedido`, `verificarProveedor`…). Cada acción revisa permisos por rol antes de cambiar algo (`permisos.ts`). **Limitación honesta:** esto no es seguridad real; cualquiera puede editar el almacenamiento de su navegador. Con Supabase, las mismas reglas pasan a RLS y se cambia solo ese archivo.
+
+**Qué se hizo.**
+- Se retiraron los videos y su configuración (portada con patrón estático de greca).
+- Cuentas y roles, verificación de proveedores, catálogo con filtros y orden, ficha de producto con calculadora de escalones, comparador, favoritos, carrito persistente que se une al entrar, listas recurrentes.
+- Checkout de 3 pasos con autocompletado de CP → estado, envíos simulados (más barata, más rápida y recomendada), cupones, CFDI y pago simulado (tarjeta de prueba, tienda de conveniencia, SPEI).
+- Pedidos con línea de tiempo, cancelación antes de "preparando", confirmación de entrega, liberación automática a los 5 días y comisión del 8 % solo sobre productos.
+- Reseñas solo de compras completadas, disputas con reembolso parcial, chat, avisos (correos simulados) con preferencias y alertas de precio.
+- Panel de proveedor (con carga CSV) y administración (con reloj simulado).
+- Páginas legales con texto base.
+- El Surtido usa los productos vivos y agrega todo al carrito.
+
+**Cómo se probó.**
+- 114 pruebas unitarias. Incluyen el flujo completo sobre la capa de datos: registro → verificación → publicación → compra a dos proveedores → envío → liberación con comisión → reseña → disputa con reembolso parcial → liberación automática.
+- Flujo completo **en navegador** (`e2e/flujo-completo.spec.ts`) con los tres roles, en celular y escritorio, sin errores de JavaScript.
+- axe sin violaciones críticas ni serias en todas las pantallas nuevas.
+- Lighthouse (celular): portada 97, surtido 99, proveedor 95, producto 85, catálogo 82; accesibilidad 100 en todas.
+
+**Qué falló y causa raíz.**
+1. *La CLABE de SPEI salía de 16 dígitos.* Causa: el número de referencia tenía 10 dígitos y se cortaba a 12 sin rellenar. Se rellena a 12; la prueba exige 18.
+2. *Los proveedores de ejemplo no podían atender pedidos.* Causa: solo Aromas del Valle tenía cuenta. Cada proveedor de ejemplo tiene ahora `<id>@demo.provana.mx`.
+3. *Las calificaciones con estrellas no mostraban el foco al usar el teclado.* Causa: el radio era invisible y la etiqueta no tenía estilo de foco. Se agregó `:has(input:focus-visible)`.
+4. *Un proveedor recién registrado no tenía ficha pública (404).* Causa: la ficha solo conocía los proveedores de los datos de ejemplo. Se agregó una ficha que lee los datos vivos.
+5. *El catálogo tenía un salto de diseño al cargar (CLS 0.456).* Causa: el pie de página subía mientras cargaba la tienda. Ahora el contenido ocupa una pantalla como mínimo (CLS 0.001).
+6. *Orden de encabezados* (tarjetas con `h3` justo debajo del `h1`): se cambiaron a `h2`.
+
+**Pendiente.** Supabase con RLS, Google, pagos y envíos reales, correo y WhatsApp reales, Excel nativo, y el rendimiento del catálogo y la ficha de producto en celular lento.

@@ -310,14 +310,14 @@
   gap: 8px;
   align-content: start;
 }
-.producto-tarjeta h3 {
+.producto-tarjeta-titulo {
   font-size: 16.5px;
   line-height: 1.25;
 }
-.producto-tarjeta h3 a {
+.producto-tarjeta-titulo a {
   text-decoration: none;
 }
-.producto-tarjeta h3 a::after {
+.producto-tarjeta-titulo a::after {
   content: "";
   position: absolute;
   inset: 0;
@@ -790,4 +790,13 @@ li[data-hecho] .punto {
 .estrella-opcion:has(input:focus-visible) {
   outline: 2.5px solid var(--accent);
   outline-offset: 2px;
+}
+
+.desglose-pedido .fila-entre {
+  flex-wrap: nowrap;
+  align-items: baseline;
+}
+.desglose-pedido dd {
+  margin: 0;
+  white-space: nowrap;
 }

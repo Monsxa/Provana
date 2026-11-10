@@ -91,17 +91,20 @@ export function Catalogo() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [s, params]);
 
-  if (!s) return <Cargando />;
+  const cabecera = (
+    <div className="pagina-cabecera">
+      <div>
+        <h1>Catálogo</h1>
+        <p>Solo productos de proveedores mexicanos verificados. Precios sin IVA.</p>
+      </div>
+    </div>
+  );
+  if (!s) return <>{cabecera}<Cargando /></>;
   const activos = ["categoria", "origen", "destino", "min", "max", "calificacion", "minimo", "entrega"].filter((k) => p(k)).length;
 
   return (
     <>
-      <div className="pagina-cabecera">
-        <div>
-          <h1>Catálogo</h1>
-          <p>Solo productos de proveedores mexicanos verificados. Precios sin IVA.</p>
-        </div>
-      </div>
+      {cabecera}
 
       <div className="tarjeta" style={{ gap: 12 }}>
         <div className="fila" style={{ alignItems: "end" }}>

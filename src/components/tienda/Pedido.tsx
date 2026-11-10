@@ -63,7 +63,7 @@ export function LineaTiempo({ pedido }: { pedido: Pedido }) {
 
 export function DesglosePedido({ p, proveedor = false }: { p: Pedido; proveedor?: boolean }) {
   return (
-    <dl className="pila chico" style={{ margin: 0 }}>
+    <dl className="pila chico desglose-pedido" style={{ margin: 0 }}>
       {p.lineas.map((l) => (
         <div key={l.productoId} className="fila-entre">
           <dt>{l.cantidad} × {l.nombre} <span className="suave">({pesos(l.precioUnitario)} c/u)</span></dt>

@@ -52,7 +52,7 @@ export default async function Pagina({ params }: Props) {
   return (
     <div className="wrap pagina">
       {jsonLd && <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />}
-      <FichaProducto id={id} />
+      <FichaProducto id={id} nombreInicial={p?.nombre} />
     </div>
   );
 }

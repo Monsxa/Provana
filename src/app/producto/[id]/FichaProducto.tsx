@@ -28,7 +28,7 @@ import { tarifas } from "@/lib/catalogo";
 
 const fecha = new Intl.DateTimeFormat("es-MX", { weekday: "long", day: "numeric", month: "long" });
 
-export function FichaProducto({ id }: { id: string }) {
+export function FichaProducto({ id, nombreInicial }: { id: string; nombreInicial?: string }) {
   const s = useTienda();
   const p = s?.productos.find((x) => x.id === id);
   const [cantidad, setCantidad] = useState(0);
@@ -56,7 +56,13 @@ export function FichaProducto({ id }: { id: string }) {
     return { q, precioUnitario, escalonAplicado, siguiente, avance, subtotal };
   }, [p, cantidad]);
 
-  if (!s) return <Cargando />;
+  if (!s)
+    return (
+      <>
+        {nombreInicial && <h1 style={{ fontSize: "clamp(28px, 4vw, 40px)" }}>{nombreInicial}</h1>}
+        <Cargando />
+      </>
+    );
   if (!p || !proveedorVisible(s, p.proveedorId)) {
     return (
       <div className="vacio-estado greca">
